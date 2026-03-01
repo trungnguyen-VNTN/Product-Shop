@@ -1,0 +1,27 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-brand">
+            <h2>PRODUCT SHOP</h2>
+            <p>Nơi cung cấp sản phẩm chất lượng với giá tốt nhất dành cho bạn.</p>
+        </div>
+
+        <div class="footer-contact">
+            <h4>Liên hệ</h4>
+            <div class="footer-contact-content">
+                <p>📧 vunguyentryng@gmail.com</p>
+                <p>📞 0377094328</p>
+                <p>📍 Dĩ An, Bình Dương</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Product Shop
+    </div>
+</footer>

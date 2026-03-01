@@ -1,0 +1,88 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.header {
+    width: 100%;
+    height: 70px;
+    padding: 0 40px;
+    background: white;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-sizing: border-box;
+}
+
+
+.logo,
+.shop-title,
+.login {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+
+.logo {
+    justify-content: flex-start;
+}
+
+.logo img {
+    height: 55px;
+    width: auto;
+    object-fit: contain;
+    transition: 0.3s;
+}
+
+.logo img:hover {
+    transform: scale(1.2);
+}
+
+.shop-title {
+    justify-content: center;
+    font-size: 34px;
+    font-weight: 800;
+    color: #ff3b2f;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.shop-title::after {
+    content: "";
+    width: 60%;
+    height: 3px;
+    background: #ff3b2f;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -6px;
+    border-radius: 2px;
+}
+
+
+.login {
+    justify-content: flex-end;
+}
+
+.login-btn {
+    padding: 10px 20px;
+    background: #ff3b2f;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.login-btn:hover {
+    background: #e63226;
+}
+
+.product-link {
+    text-decoration: none;
+    color: inherit;
+}

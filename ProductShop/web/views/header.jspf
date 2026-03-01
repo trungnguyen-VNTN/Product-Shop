@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+
+<div class="header">
+
+
+    
+    <div class="logo">
+        <a href="${pageContext.request.contextPath}/main_controller?action=home" class="product-link">
+            <img src="${pageContext.request.contextPath}/images/logo.jpg">
+        <a/>
+    </div>
+    
+    <div class="shop-title">
+        Products Shop
+    </div>
+
+    <div class="login">
+        <a href="${pageContext.request.contextPath}/main_controller?action=login" class="login-btn">
+            Login
+        </a>
+    </div>
+
+</div>

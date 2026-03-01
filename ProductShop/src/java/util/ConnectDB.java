@@ -26,7 +26,7 @@ public class ConnectDB {
     public ConnectDB(ServletContext sc) {
         this.hostName = sc.getInitParameter("hostAddress");
         this.instance = sc.getInitParameter("instance");
-        this.dbName = sc.getInitParameter("bdName");
+        this.dbName = sc.getInitParameter("dbName");
         this.port = sc.getInitParameter("dbPort");
         this.user = sc.getInitParameter("userName");
         this.pass = sc.getInitParameter("userPass");
