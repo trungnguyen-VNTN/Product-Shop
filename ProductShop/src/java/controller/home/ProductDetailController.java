@@ -32,11 +32,13 @@ public class ProductDetailController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         String productId = request.getParameter("id");
         ProductDAO dao = new ProductDAO(getServletContext());
         Product product = dao.getObjectById(productId);
         request.setAttribute("product", product);
-        request.getRequestDispatcher("main_controller?action=show_detail").forward(request, response);
+        request.getRequestDispatcher("views/detail.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

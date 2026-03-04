@@ -2,8 +2,6 @@
 
 <div class="header">
 
-
-    
     <div class="logo">
         <a href="${pageContext.request.contextPath}/main_controller?action=home" class="product-link">
             <img src="${pageContext.request.contextPath}/images/logo.jpg">

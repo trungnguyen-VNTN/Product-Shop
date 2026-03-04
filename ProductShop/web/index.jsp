@@ -2,55 +2,72 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
-<div class="containner">
-    <%@include file="views/header.jspf" %>
 
-    <div class="product-container">
 
-        <c:forEach var="p" items="${productList}">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Product Shop</title>
+    </head>
+    <body>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
+        <div class="containner">
+            <c:choose>
+                <c:when test="${sessionScope.user == null}">
+                    <%@ include file="views/header.jspf" %>
+                </c:when>
+                <c:otherwise>
+                    <%@ include file="views/private_views/private_header.jspf" %>
+                </c:otherwise>
+            </c:choose>
 
-            <a href="${pageContext.request.contextPath}/main_controller?action=detail&id=${p.productId}" class="product-link">
+            <div class="product-container">
 
-                <div class="product-card">
+                <c:forEach var="p" items="${productList}">
 
-                    <c:if test="${p.discount > 0}">
-                        <div class="discount">-${p.discount}%</div>
-                    </c:if>
+                    <a href="${pageContext.request.contextPath}/main_controller?action=detail&id=${p.productId}" class="product-link">
 
-                    <div class="img-box">
-                        <img src="${pageContext.request.contextPath}/${p.productImage}" class="product-img"/>
-                    </div>
-
-                    <div class="product-info">
-                        <div class="product-name">
-                            ${p.productName}
-                        </div>
-
-                        <div class="price-box">
+                        <div class="product-card">
 
                             <c:if test="${p.discount > 0}">
-                                <span class="old-price">
-                                    <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/> đ
-                                </span>
+                                <div class="discount">-${p.discount}%</div>
                             </c:if>
 
-                            <span class="new-price">
-                                <fmt:formatNumber 
-                                    value="${p.price - (p.price * p.discount / 100)}" 
-                                    type="number" 
-                                    groupingUsed="true"/> đ
-                            </span>
+                            <div class="img-box">
+                                <img src="${pageContext.request.contextPath}/${p.productImage}" class="product-img"/>
+                            </div>
+
+                            <div class="product-info">
+                                <div class="product-name">
+                                    ${p.productName}
+                                </div>
+
+                                <div class="price-box">
+
+                                    <c:if test="${p.discount > 0}">
+                                        <span class="old-price">
+                                            <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/> đ
+                                        </span>
+                                    </c:if>
+
+                                    <span class="new-price">
+                                        <fmt:formatNumber 
+                                            value="${p.price - (p.price * p.discount / 100)}" 
+                                            type="number" 
+                                            groupingUsed="true"/> đ
+                                    </span>
+
+                                </div>
+                            </div>
 
                         </div>
-                    </div>
 
-                </div>
+                    </a>
 
-            </a>
+                </c:forEach>
 
-        </c:forEach>
-
-    </div>
-<div/>
-<%@include file="views/footer.jspf" %>
+            </div>
+            <%@include file="views/footer.jspf" %>
+        </div>
+    </body>
+</html>

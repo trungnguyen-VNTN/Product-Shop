@@ -1,0 +1,120 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f9;
+}
+
+/* Wrapper */
+.page-wrapper {
+    padding: 40px 20px;
+}
+
+/* Title */
+.page-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.page-title h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.page-title p {
+    margin: 6px 0 0;
+    color: #777;
+}
+
+/* Card */
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+/* Form layout */
+.form-layout {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form group */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+/* Input + Select */
+.form-group input,
+.form-group select {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+/* Focus effect */
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #1976d2;
+    box-shadow: 0 0 0 2px rgba(25,118,210,0.08);
+}
+
+/* File input riêng */
+.form-group input[type="file"] {
+    padding: 6px;
+    border: none;
+}
+
+/* Buttons */
+.form-footer {
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 9px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+    transition: 0.2s;
+}
+
+.btn-success {
+    background-color: #2e7d32;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #757575;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Error message */
+.error {
+    color: #d32f2f;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+

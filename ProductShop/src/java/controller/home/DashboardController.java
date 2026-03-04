@@ -2,22 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.auth;
+package controller.home;
 
 import dao.AccountDAO;
+import dao.CategoryDAO;
+import dao.ProductDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Account;
 
 /**
  *
  * @author PC
  */
-public class LoginController extends HttpServlet {
+public class DashboardController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,39 +30,32 @@ public class LoginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+try {
+            // Khởi tạo DAO
+            AccountDAO accountDAO = new AccountDAO();
+            CategoryDAO categoryDAO = new CategoryDAO();
+            ProductDAO productDAO = new ProductDAO();
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+            // Lấy tổng số
+            int totalAccounts = accountDAO.countAccounts();
+            int totalCategories = categoryDAO.countCategories();
+            int totalProducts = productDAO.countProducts();
 
-        String url;
+            // Set attribute cho JSP
+            request.setAttribute("totalAccounts", totalAccounts);
+            request.setAttribute("totalCategories", totalCategories);
+            request.setAttribute("totalProducts", totalProducts);
 
-        try {
-            AccountDAO dao = new AccountDAO(getServletContext());
-            Account account = dao.loginSuccess(username, password);
-
-            if (account == null) {
-                request.setAttribute("error", "Invalid username or password");
-
-            } else if (!account.isUsed()) {
-                request.setAttribute("error", "The account is banned");
-
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", account);
-
-                url = "main_controller?action=private";
-                response.sendRedirect(url);
-                return;
-            }
+            // Forward sang dashboard.jsp
+            request.getRequestDispatcher("views/private_views/private.jsp")
+                   .forward(request, response);
 
         } catch (Exception e) {
-            log("Error at LoginController: " + e.toString());
+            e.printStackTrace();
         }
-
-        request.getRequestDispatcher("main_controller?action=login").forward(request, response);
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

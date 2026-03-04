@@ -39,11 +39,10 @@ public class CategoryDAO implements Accessible<Category> {
         }
         try {
             Connection con = getConnect(sc);
-            String sqlCommand = "INSERT INTO Categories VALUES (?, ?, ?) ";
+            String sqlCommand = "INSERT INTO Categories VALUES ( ?, ?) ";
             PreparedStatement ps = con.prepareStatement(sqlCommand);
-            ps.setInt(1, obj.getTypeId());
-            ps.setString(2, obj.getCategoryName());
-            ps.setString(3, obj.getMemo());
+            ps.setString(1, obj.getCategoryName());
+            ps.setString(2, obj.getMemo());
             result = ps.executeUpdate();
             ps.close();
             con.close();
@@ -96,13 +95,15 @@ public class CategoryDAO implements Accessible<Category> {
 
     @Override
     public Category getObjectById(String id) {
+
         if (id == null || id.isEmpty()) {
             return null;
         }
+        int typeId = Integer.parseInt(id);
         try {
             String sqlCommand = "SELECT * FROM Categories WHERE typeId = ?";
             PreparedStatement ps = con.prepareStatement(sqlCommand);
-            ps.setString(1, id);
+            ps.setInt(1, typeId);
             ResultSet rs = ps.executeQuery();
             Category result = null;
             if (rs.next()) {
@@ -142,6 +143,21 @@ public class CategoryDAO implements Accessible<Category> {
             Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
+    }
+
+    public int countCategories() {
+        int count = 0;
+        try {
+            String sql = "SELECT COUNT(*) FROM Categories";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
 }

@@ -5,8 +5,8 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author PC
  */
+@MultipartConfig
 public class MainController extends HttpServlet {
 
     /**
@@ -28,6 +29,7 @@ public class MainController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
 
         if (action == null) {
@@ -37,7 +39,7 @@ public class MainController extends HttpServlet {
         switch (action) {
 
             case "home":
-                request.getRequestDispatcher("/product_list")
+                request.getRequestDispatcher("/product_list_home")
                         .forward(request, response);
                 break;
 
@@ -46,21 +48,120 @@ public class MainController extends HttpServlet {
                         .forward(request, response);
                 break;
 
+            case "logout":
+                request.getRequestDispatcher("/logout")
+                        .forward(request, response);
+                break;
+
             case "detail":
                 request.getRequestDispatcher("/product_detail")
                         .forward(request, response);
                 break;
 
-            case "show_detail":
-                request.getRequestDispatcher("views/detail.jsp")
+            case "private":
+                request.getRequestDispatcher("/dashboard")
+                        .forward(request, response);
+                break;
+            //-------------------ACCOUNT--------------------------//
+            case "accounts":
+                request.getRequestDispatcher("/account_list")
+                        .forward(request, response);
+                break;
+
+            case "updateAccountView":
+                request.getRequestDispatcher("/account_update_view")
                         .forward(request, response);
                 break;
                 
-            case "private":
-                request.getRequestDispatcher("views/private_views/private.jsp")
+            case "updateAccount":
+                request.getRequestDispatcher("/account_update")
+                        .forward(request, response);
+                break;
+                
+            case "toggleAccountStatus":
+                request.getRequestDispatcher("/account_toggle")
+                        .forward(request, response);
+                break;
+
+            case "deleteAccount":
+                request.getRequestDispatcher("/account_delete")
+                        .forward(request, response);
+                break;
+
+            case "addAccountView":
+                request.getRequestDispatcher("/views/private_views/add_account.jsp")
+                        .forward(request, response);
+                break;
+
+            case "addAccount":
+                request.getRequestDispatcher("/account_add")
+                        .forward(request, response);
+                break;
+
+                //-------------------CATEGORY--------------------------//
+            case "categories":
+                request.getRequestDispatcher("/category_list")
+                        .forward(request, response);
+                break;
+                
+            case "updateCategoryView":
+                request.getRequestDispatcher("/category_update_view")
+                        .forward(request, response);
+                break;
+                
+            case "updateCategory":
+                request.getRequestDispatcher("/category_update")
+                        .forward(request, response);
+                break;
+                
+            case "deleteCategory":
+            request.getRequestDispatcher("/category_delete")
+                    .forward(request, response);
+            break;
+                            
+            case "addCategoryView":
+                request.getRequestDispatcher("/views/private_views/add_category.jsp")
+                        .forward(request, response);
+                break;
+                
+             case "addCategory":
+                request.getRequestDispatcher("/category_add")
+                        .forward(request, response);
+                break;
+            
+            //-------------------PRODUCT--------------------------//
+            case "products":
+                request.getRequestDispatcher("/product_list")
+                        .forward(request, response);
+                break;
+
+            case "updateProductView":
+                request.getRequestDispatcher("/product_update_view")
+                        .forward(request, response);
+                break;
+                
+            case "updateProduct":
+                request.getRequestDispatcher("/product_update")
+                        .forward(request, response);
+                break;
+
+            case "deleteProduct":
+                request.getRequestDispatcher("/product_delete")
+                        .forward(request, response);
+                break;
+
+            case "addProductView":
+                request.getRequestDispatcher("/product_add_view")
+                        .forward(request, response);
+                break;
+
+            case "addProduct":
+                request.getRequestDispatcher("/product_add")
                         .forward(request, response);
                 break;
         }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

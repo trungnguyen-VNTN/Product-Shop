@@ -2,25 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.home;
+package controller.category;
 
-import dao.ProductDAO;
+import dao.CategoryDAO;
+import error.CategoryError;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Product;
+import model.Category;
 
 /**
  *
  * @author PC
  */
-public class ProductListController extends HttpServlet {
+public class CategoryUpdateController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,12 +30,53 @@ public class ProductListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
-        ProductDAO dao = new ProductDAO(getServletContext());
-        List<Product> list = dao.listAll();
-        request.setAttribute("productList", list);
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
-return;
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+
+        String typeIdStr = request.getParameter("typeId");
+        String categoryName = request.getParameter("categoryName");
+        String memo = request.getParameter("memo");
+
+        CategoryError error = new CategoryError();
+        boolean valid = true;
+
+// ===== PARSE typeId =====
+        int typeId = Integer.parseInt(typeIdStr);
+
+// ===== VALIDATE CATEGORY NAME =====
+        if (categoryName == null || categoryName.trim().isEmpty()) {
+            error.setCategoryNameError("Category name is required");
+            valid = false;
+        } else if (categoryName.length() > 88) {
+            error.setCategoryNameError("Category name must be <= 88 characters");
+            valid = false;
+        }
+
+
+        if (!valid) {
+            request.setAttribute("category_error", error);
+            request.getRequestDispatcher("/views/private_views/update_category.jsp")
+                    .forward(request, response);
+            return;
+        }
+
+        try {
+
+            if (memo == null || memo.trim().isEmpty()) {
+                memo = "";
+            }
+
+            Category cate = new Category(typeId, categoryName, memo);
+
+            CategoryDAO dao = new CategoryDAO(getServletContext());
+            dao.updateRec(cate);
+
+            response.sendRedirect("main_controller?action=categories");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -52,13 +91,7 @@ return;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProductListController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductListController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -72,13 +105,7 @@ return;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProductListController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductListController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

@@ -37,12 +37,84 @@
         <servlet-class>controller.auth.LogoutController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ProductListController</servlet-name>
-        <servlet-class>controller.home.ProductListController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ProductDetailController</servlet-name>
         <servlet-class>controller.home.ProductDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountListController</servlet-name>
+        <servlet-class>controller.account.AccountListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountDeleteController</servlet-name>
+        <servlet-class>controller.account.AccountDeleteController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountUpdateController</servlet-name>
+        <servlet-class>controller.account.AccountUpdateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountAddController</servlet-name>
+        <servlet-class>controller.account.AccountAddController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountToggleStatusController</servlet-name>
+        <servlet-class>controller.account.AccountToggleStatusController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountUpdateViewController</servlet-name>
+        <servlet-class>controller.account.AccountUpdateViewController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryListController</servlet-name>
+        <servlet-class>controller.category.CategoryListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryAddController</servlet-name>
+        <servlet-class>controller.category.CategoryAddController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryUpdateViewController</servlet-name>
+        <servlet-class>controller.category.CategoryUpdateViewController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryUpdateController</servlet-name>
+        <servlet-class>controller.category.CategoryUpdateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryDeleteController</servlet-name>
+        <servlet-class>controller.category.CategoryDeleteController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProuductListHomeController</servlet-name>
+        <servlet-class>controller.home.ProuductListHomeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductListController</servlet-name>
+        <servlet-class>controller.product.ProductListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductAddController</servlet-name>
+        <servlet-class>controller.product.ProductAddController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductAddViewController</servlet-name>
+        <servlet-class>controller.product.ProductAddViewController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductDeleteController</servlet-name>
+        <servlet-class>controller.product.ProductDeleteController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductUpdateViewController</servlet-name>
+        <servlet-class>controller.product.ProductUpdateViewController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductUpdateController</servlet-name>
+        <servlet-class>controller.product.ProductUpdateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashboardController</servlet-name>
+        <servlet-class>controller.home.DashboardController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -57,12 +129,84 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ProductDetailController</servlet-name>
+        <url-pattern>/product_detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountListController</servlet-name>
+        <url-pattern>/account_list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountDeleteController</servlet-name>
+        <url-pattern>/account_delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountUpdateController</servlet-name>
+        <url-pattern>/account_update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountAddController</servlet-name>
+        <url-pattern>/account_add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountToggleStatusController</servlet-name>
+        <url-pattern>/account_toggle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountUpdateViewController</servlet-name>
+        <url-pattern>/account_update_view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryListController</servlet-name>
+        <url-pattern>/category_list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryAddController</servlet-name>
+        <url-pattern>/category_add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryUpdateViewController</servlet-name>
+        <url-pattern>/category_update_view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryUpdateController</servlet-name>
+        <url-pattern>/category_update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryDeleteController</servlet-name>
+        <url-pattern>/category_delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProuductListHomeController</servlet-name>
+        <url-pattern>/product_list_home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ProductListController</servlet-name>
         <url-pattern>/product_list</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ProductDetailController</servlet-name>
-        <url-pattern>/product_detail</url-pattern>
+        <servlet-name>ProductAddController</servlet-name>
+        <url-pattern>/product_add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductAddViewController</servlet-name>
+        <url-pattern>/product_add_view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductDeleteController</servlet-name>
+        <url-pattern>/product_delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductUpdateViewController</servlet-name>
+        <url-pattern>/product_update_view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductUpdateController</servlet-name>
+        <url-pattern>/product_update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashboardController</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

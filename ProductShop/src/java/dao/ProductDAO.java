@@ -41,7 +41,7 @@ public class ProductDAO implements Accessible<Product> {
         int result = 0;
         PreparedStatement ps = null;
         try {
-            String sqlCommand = "INSERT INTO Product VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sqlCommand = "INSERT INTO Products VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             ps = con.prepareStatement(sqlCommand);
             ps.setString(1, obj.getProductId());
             ps.setString(2, obj.getProductName());
@@ -75,7 +75,7 @@ public class ProductDAO implements Accessible<Product> {
         int result = 0;
         PreparedStatement ps = null;
         try {
-            String sqlCommand = "UPDATE Product SET "
+            String sqlCommand = "UPDATE Products SET "
                     + "productName = ?,"
                     + "productImage = ?,"
                     + "brief = ?,"
@@ -83,8 +83,8 @@ public class ProductDAO implements Accessible<Product> {
                     + "typeId = ?,"
                     + "account = ?,"
                     + "unit = ?,"
-                    + "price = ? "
-                    + "price = ?,"
+                    + "price = ?, "
+                    + "discount = ? "
                     + "WHERE productId = ?";
             ps = con.prepareStatement(sqlCommand);
             ps.setString(1, obj.getProductName());
@@ -119,7 +119,7 @@ public class ProductDAO implements Accessible<Product> {
         int result = 0;
         PreparedStatement ps = null;
         try {
-            String sqlCommand = "DELETE FROM Product WHERE productId = ?";
+            String sqlCommand = "DELETE FROM Products WHERE productId = ?";
             ps = con.prepareStatement(sqlCommand);
             ps.setString(1, obj.getProductId());
             result = ps.executeUpdate();
@@ -332,5 +332,20 @@ public class ProductDAO implements Accessible<Product> {
         pro.setType(cat);
 
         return pro;
+    }
+
+    public int countProducts() {
+        int count = 0;
+        try {
+            String sql = "SELECT COUNT(*) FROM Products";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

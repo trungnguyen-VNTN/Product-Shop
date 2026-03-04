@@ -264,7 +264,13 @@ public class AccountDAO implements Accessible<Account> {
         if (acc == null || acc.isEmpty()) {
             return 0;
         }
+        int change = 0;
         int result = 0;
+        if (isUsed) {
+            change = 1;
+        } else {
+            change = 0;
+        }
         PreparedStatement ps = null;
         try {
             String sqlCommand
@@ -272,7 +278,7 @@ public class AccountDAO implements Accessible<Account> {
                     + "isUse = ? "
                     + "WHERE account = ?";
             ps = con.prepareStatement(sqlCommand);
-            ps.setBoolean(1, isUsed);
+            ps.setInt(1, change);
             ps.setString(2, acc);
             result = ps.executeUpdate();
         } catch (SQLException ex) {
@@ -320,5 +326,20 @@ public class AccountDAO implements Accessible<Account> {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
+    }
+
+    public int countAccounts() {
+        int count = 0;
+        try {
+            String sql = "SELECT COUNT(*) FROM Accounts";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

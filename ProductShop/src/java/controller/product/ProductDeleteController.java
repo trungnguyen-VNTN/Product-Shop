@@ -2,22 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.auth;
+package controller.product;
 
-import dao.AccountDAO;
+import dao.ProductDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Account;
 
 /**
  *
  * @author PC
  */
-public class LoginController extends HttpServlet {
+public class ProductDeleteController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,39 +31,20 @@ public class LoginController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
+request.setCharacterEncoding("UTF-8");
+response.setContentType("text/html;charset=UTF-8");
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+String productId = request.getParameter("productId");
 
-        String url;
+ProductDAO dao = new ProductDAO(getServletContext());
 
-        try {
-            AccountDAO dao = new AccountDAO(getServletContext());
-            Account account = dao.loginSuccess(username, password);
+if (productId != null) {
+    dao.deleteRec(dao.getObjectById(productId));
+}
 
-            if (account == null) {
-                request.setAttribute("error", "Invalid username or password");
-
-            } else if (!account.isUsed()) {
-                request.setAttribute("error", "The account is banned");
-
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", account);
-
-                url = "main_controller?action=private";
-                response.sendRedirect(url);
-                return;
-            }
-
-        } catch (Exception e) {
-            log("Error at LoginController: " + e.toString());
-        }
-
-        request.getRequestDispatcher("main_controller?action=login").forward(request, response);
+// Sau khi delete -> redirect về list
+response.sendRedirect("main_controller?action=products");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -76,7 +59,13 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ProductDeleteController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDeleteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -90,7 +79,13 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ProductDeleteController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDeleteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
