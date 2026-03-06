@@ -5,8 +5,8 @@
 package controller.product;
 
 import dao.ProductDAO;
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Product;
 
 /**
  *
@@ -32,19 +33,30 @@ public class ProductDeleteController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
-request.setCharacterEncoding("UTF-8");
-response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
-String productId = request.getParameter("productId");
+        String productId = request.getParameter("productId");
 
-ProductDAO dao = new ProductDAO(getServletContext());
+        ProductDAO dao = new ProductDAO(getServletContext());
 
-if (productId != null) {
-    dao.deleteRec(dao.getObjectById(productId));
-}
+        if (productId != null) {
+            Product product = dao.getObjectById(productId);
+            String imageName = product.getProductImage();
 
-// Sau khi delete -> redirect về list
-response.sendRedirect("main_controller?action=products");
+            String path = getServletContext().getRealPath(imageName);
+
+            // tạo file object
+            File file = new File(path);
+
+            // nếu file tồn tại thì xóa
+            if (file.exists()) {
+                file.delete();
+            }
+            dao.deleteRec(dao.getObjectById(productId));
+        }
+
+        response.sendRedirect("main_controller?action=products");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

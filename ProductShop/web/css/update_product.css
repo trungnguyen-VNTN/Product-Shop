@@ -55,19 +55,22 @@ body {
     font-size: 14px;
 }
 
-/* Input + Select */
+/* Input + Select + Textarea */
 .form-group input,
-.form-group select {
+.form-group select,
+.form-group textarea {
     padding: 10px 12px;
     border-radius: 6px;
     border: 1px solid #ccc;
     font-size: 14px;
     transition: 0.2s;
+    box-sizing: border-box;
 }
 
 /* Focus effect */
 .form-group input:focus,
-.form-group select:focus {
+.form-group select:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: #1976d2;
     box-shadow: 0 0 0 2px rgba(25,118,210,0.08);
@@ -117,4 +120,16 @@ body {
     margin-top: 4px;
 }
 
-
+/* Brief textarea */
+textarea.brief-box {
+    width: 100%;
+    height: 150px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.5;
+    box-sizing: border-box;
+    resize: vertical;
+}

@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -60,7 +59,6 @@ public class ProductAddController extends HttpServlet {
 
 // upload
         Part filePart = request.getPart("fileImage");
-        String imageNameInput = request.getParameter("imageName");
 
         ProductError error = new ProductError();
         boolean valid = true;
@@ -138,20 +136,12 @@ public class ProductAddController extends HttpServlet {
         try {
 
             // ===== HANDLE IMAGE UPLOAD =====
-            String dbImagePath = "";   // cái sẽ lưu vào DB
+            // ===== HANDLE IMAGE UPLOAD =====
+            String dbImagePath = "";   
 
             if (filePart != null && filePart.getSize() > 0) {
 
-                String originalFileName = filePart.getSubmittedFileName();
-                String extension = "";
-
-                int i = originalFileName.lastIndexOf(".");
-                if (i > 0) {
-                    extension = originalFileName.substring(i);
-                }
-
-                // tên file cuối cùng
-                String newFileName = imageNameInput + extension;
+                String fileName = filePart.getSubmittedFileName();
 
                 // đường dẫn vật lý
                 String uploadPath = getServletContext().getRealPath("/images/sanPham");
@@ -162,9 +152,9 @@ public class ProductAddController extends HttpServlet {
                 }
 
                 // lưu file vào server
-                filePart.write(uploadPath + File.separator + newFileName);
+                filePart.write(uploadPath + File.separator + fileName);
 
-                dbImagePath = "/images/sanPham/" + newFileName;
+                dbImagePath = "/images/sanPham/" + fileName;
             }
             AccountDAO accDao = new AccountDAO(getServletContext());
             CategoryDAO catDao = new CategoryDAO(getServletContext());

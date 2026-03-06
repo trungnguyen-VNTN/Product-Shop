@@ -51,17 +51,10 @@
                                value="${product.productImage}">
                     </div>
 
-                    <div class="form-group">
-                        <label>Image Name (without extension)</label>
-                        <input type="text" name="imageName"
-                               value="${param.imageName}"
-                               placeholder="example_image">
-                    </div>
-
                     <!-- Brief -->
                     <div class="form-group">
                         <label>Brief</label>
-                        <textarea name="brief">${param.brief != null ? param.brief : product.brief}</textarea>
+                        <textarea class="brief-box" name="brief">${param.brief != null ? param.brief : product.brief.replaceAll("\\s+", " ").trim()}</textarea>
                     </div>
 
                     <!-- Posted Date -->
