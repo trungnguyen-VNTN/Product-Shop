@@ -176,16 +176,9 @@ public class ProductAddController extends HttpServlet {
                     price,
                     discount
             );
-            int result = dao.insertRec(product);
-            System.out.println("Insert result = " + result);
+            dao.insertRec(product);
 
-            if (result > 0) {
-                System.out.println("INSERT SUCCESS");
-            } else {
-                System.out.println("INSERT FAILED");
-            }
-
-            response.sendRedirect("main_controller?action=products");
+            response.sendRedirect("main_controller?action=private_products");
 
         } catch (Exception e) {
             e.printStackTrace();

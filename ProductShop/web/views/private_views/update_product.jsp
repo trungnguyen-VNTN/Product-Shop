@@ -6,7 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Update Product</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/update_product.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/update_product.css">
     </head>
 
     <body>
@@ -22,7 +22,7 @@
 
             <div class="card">
 
-                <form action="main_controller?action=updateProduct"
+                <form action="main_controller?action=private_updateProduct"
                       method="post"
                       enctype="multipart/form-data"
                       class="form-layout">
@@ -122,7 +122,7 @@
                     <!-- Buttons -->
                     <div class="form-footer">
                         <button type="submit" class="btn btn-success">Update Product</button>
-                        <a href="main_controller?action=products" class="btn btn-secondary">Cancel</a>
+                        <a href="main_controller?action=private_products" class="btn btn-secondary">Cancel</a>
                     </div>
 
                 </form>

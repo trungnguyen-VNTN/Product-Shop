@@ -5,7 +5,6 @@
 package controller.account;
 
 import dao.AccountDAO;
-import dao.CategoryDAO;
 import error.AccountError;
 import java.io.IOException;
 import java.sql.Date;
@@ -118,7 +117,7 @@ public class AccountAddController extends HttpServlet {
 
             dao.insertRec(acc);
 
-            response.sendRedirect("main_controller?action=accounts");
+            response.sendRedirect("main_controller?action=private_accounts");
 
         } catch (Exception e) {
             e.printStackTrace();

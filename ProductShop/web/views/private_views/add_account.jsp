@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Account</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/add_account.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/add_account.css">
 </head>
 
 <body>
@@ -22,7 +22,7 @@
 
     <div class="card">
 
-        <form action="main_controller?action=addAccount" method="post" class="form-layout">
+        <form action="main_controller?action=private_addAccount" method="post" class="form-layout">
             <input type="hidden" name="action" value="addAccount">
 
             <!-- Account -->

@@ -171,7 +171,7 @@ public class ProductUpdateController extends HttpServlet {
                     discount
             );
             dao.updateRec(product);
-            response.sendRedirect("main_controller?action=products");
+            response.sendRedirect("main_controller?action=private_products");
 
         } catch (Exception e) {
             e.printStackTrace();

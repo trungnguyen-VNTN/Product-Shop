@@ -5,7 +5,6 @@
 package controller.account;
 
 import dao.AccountDAO;
-import dao.ProductDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -40,7 +39,7 @@ public class AccountDeleteController extends HttpServlet {
         if (account != null) {
             dao.deleteRec(dao.getObjectById(account));
         }
-        request.getRequestDispatcher("main_controller?action=accounts").forward(request, response);
+        request.getRequestDispatcher("main_controller?action=private_accounts").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

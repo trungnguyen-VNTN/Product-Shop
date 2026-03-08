@@ -7,7 +7,6 @@ package controller.account;
 import dao.AccountDAO;
 import error.AccountError;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -110,7 +109,7 @@ public class AccountUpdateController extends HttpServlet {
             AccountDAO dao = new AccountDAO(getServletContext());
             dao.updateRec(acc);
 
-            response.sendRedirect("main_controller?action=accounts");
+            response.sendRedirect("main_controller?action=private_accounts");
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -5,7 +5,7 @@
 <html>
     <head>
         <title>Login</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/login.css">
     </head>
 
     <body>

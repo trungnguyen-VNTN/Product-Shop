@@ -6,7 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Add Product</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/add_product.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/add_product.css">
     </head>
 
     <body>
@@ -22,7 +22,7 @@
 
             <div class="card">
 
-                <form action="main_controller?action=addProduct"
+                <form action="main_controller?action=private_addProduct"
                       method="post"
                       enctype="multipart/form-data"
                       class="form-layout">

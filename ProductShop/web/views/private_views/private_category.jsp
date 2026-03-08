@@ -6,7 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Category Management</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/category_list.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/category_list.css">
     </head>
 
     <body>
@@ -42,11 +42,11 @@
                                 <td class="actions">
 
                                     <!-- Update -->
-                                    <a href="main_controller?action=updateCategoryView&typeId=${cate.typeId}" 
+                                    <a href="main_controller?action=private_updateCategoryView&typeId=${cate.typeId}" 
                                        class="btn btn-primary">Update</a>
 
                                     <!-- Delete -->
-                                    <a href="main_controller?action=deleteCategory&typeId=${cate.typeId}" 
+                                    <a href="main_controller?action=private_deleteCategory&typeId=${cate.typeId}" 
                                        class="btn btn-danger"
                                        onclick="return confirm('Are you sure to delete this category?')">
                                         Delete
@@ -62,7 +62,7 @@
             </div>
 
             <div class="card-footer">
-                <a href="main_controller?action=addCategoryView" class="btn btn-add">
+                <a href="main_controller?action=private_addCategoryView" class="btn btn-add">
                     + Add New Category
                 </a>
             </div>

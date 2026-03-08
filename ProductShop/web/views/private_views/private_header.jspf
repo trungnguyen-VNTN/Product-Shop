@@ -1,6 +1,6 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_header.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/private_header.css">
 
 <div class="admin-header">
 
@@ -19,9 +19,9 @@
     <div class="header-center">
         <a href="main_controller?action=home" class="nav-item">Home</a>
         <a href="main_controller?action=private" class="nav-item">Dashboard</a>
-        <a href="main_controller?action=accounts" class="nav-item">Accounts</a>
-        <a href="main_controller?action=products" class="nav-item">Products</a>
-        <a href="main_controller?action=categories" class="nav-item">Categories</a>
+        <a href="main_controller?action=private_accounts" class="nav-item">Accounts</a>
+        <a href="main_controller?action=private_products" class="nav-item">Products</a>
+        <a href="main_controller?action=private_categories" class="nav-item">Categories</a>
     </div>
 
     <div class="header-right">

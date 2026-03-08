@@ -1,4 +1,4 @@
-sửa lại thành update product <%@page contentType="text/html" pageEncoding="UTF-8"%> 
+<%@page contentType="text/html" pageEncoding="UTF-8"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -6,7 +6,7 @@ sửa lại thành update product <%@page contentType="text/html" pageEncoding="
 <head>
     <meta charset="UTF-8">
     <title>Update Account</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/add_account.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/add_account.css">
 </head>
 
 <body>
@@ -22,7 +22,7 @@ sửa lại thành update product <%@page contentType="text/html" pageEncoding="
 
     <div class="card">
 
-        <form action="main_controller?action=updateAccount" method="post" class="form-layout">
+        <form action="main_controller?action=private_updateAccount" method="post" class="form-layout">
 
             <!-- Account (readonly) -->
             <div class="form-group">
@@ -117,7 +117,7 @@ sửa lại thành update product <%@page contentType="text/html" pageEncoding="
             <!-- Buttons -->
             <div class="form-footer">
                 <button type="submit" class="btn btn-success">Update Account</button>
-                <a href="main_controller?action=accounts" class="btn btn-secondary">Cancel</a>
+                <a href="main_controller?action=private_accounts" class="btn btn-secondary">Cancel</a>
             </div>
 
         </form>

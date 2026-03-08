@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Account Management</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/account_list.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/account_list.css">
 </head>
 
 <body>
@@ -97,7 +97,7 @@
                             <td class="actions">
 
                                 <!-- Update -->
-                                <a href="main_controller?action=updateAccountView&account=${acc.account}"
+                                <a href="main_controller?action=private_updateAccountView&account=${acc.account}"
                                    class="btn btn-primary">
                                     Update
                                 </a>
@@ -105,13 +105,13 @@
                                 <!-- Toggle Status -->
                                 <c:choose>
                                     <c:when test="${acc.used}">
-                                        <a href="main_controller?action=toggleAccountStatus&account=${acc.account}"
+                                        <a href="main_controller?action=private_toggleAccountStatus&account=${acc.account}"
                                            class="btn btn-warning">
                                             Deactivate
                                         </a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="main_controller?action=toggleAccountStatus&account=${acc.account}"
+                                        <a href="main_controller?action=private_toggleAccountStatus&account=${acc.account}"
                                            class="btn btn-success">
                                             Activate
                                         </a>
@@ -119,7 +119,7 @@
                                 </c:choose>
 
                                 <!-- Delete -->
-                                <a href="main_controller?action=deleteAccount&account=${acc.account}"
+                                <a href="main_controller?action=private_deleteAccount&account=${acc.account}"
                                    class="btn btn-danger"
                                    onclick="return confirm('Are you sure to delete this account?')">
                                     Delete
@@ -134,7 +134,7 @@
         </div>
 
         <div class="card-footer">
-            <a href="main_controller?action=addAccountView" class="btn btn-add">
+            <a href="main_controller?action=private_addAccountView" class="btn btn-add">
                 + Add New Account
             </a>
         </div>

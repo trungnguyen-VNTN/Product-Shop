@@ -21,7 +21,7 @@ html, body {
 
     background: 
         linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), 
-        url("../images/background1.png") center/cover no-repeat;
+        url("/Workshop1/images/web_images/background1.png") center/cover no-repeat;
 
     filter: blur(3px); 
     z-index: 0;

@@ -44,7 +44,7 @@ public class MainController extends HttpServlet {
                 break;
 
             case "login":
-                request.getRequestDispatcher("views/login.jsp")
+                request.getRequestDispatcher("views/public_views/login.jsp")
                         .forward(request, response);
                 break;
 
@@ -57,105 +57,105 @@ public class MainController extends HttpServlet {
                 request.getRequestDispatcher("/product_detail")
                         .forward(request, response);
                 break;
-
+            //-------------------PRIVATE--------------------------//
             case "private":
                 request.getRequestDispatcher("/dashboard")
                         .forward(request, response);
                 break;
             //-------------------ACCOUNT--------------------------//
-            case "accounts":
+            case "private_accounts":
                 request.getRequestDispatcher("/account_list")
                         .forward(request, response);
                 break;
 
-            case "updateAccountView":
+            case "private_updateAccountView":
                 request.getRequestDispatcher("/account_update_view")
                         .forward(request, response);
                 break;
                 
-            case "updateAccount":
+            case "private_updateAccount":
                 request.getRequestDispatcher("/account_update")
                         .forward(request, response);
                 break;
                 
-            case "toggleAccountStatus":
+            case "private_toggleAccountStatus":
                 request.getRequestDispatcher("/account_toggle")
                         .forward(request, response);
                 break;
 
-            case "deleteAccount":
+            case "private_deleteAccount":
                 request.getRequestDispatcher("/account_delete")
                         .forward(request, response);
                 break;
 
-            case "addAccountView":
+            case "private_addAccountView":
                 request.getRequestDispatcher("/views/private_views/add_account.jsp")
                         .forward(request, response);
                 break;
 
-            case "addAccount":
+            case "private_addAccount":
                 request.getRequestDispatcher("/account_add")
                         .forward(request, response);
                 break;
 
                 //-------------------CATEGORY--------------------------//
-            case "categories":
+            case "private_categories":
                 request.getRequestDispatcher("/category_list")
                         .forward(request, response);
                 break;
                 
-            case "updateCategoryView":
+            case "private_updateCategoryView":
                 request.getRequestDispatcher("/category_update_view")
                         .forward(request, response);
                 break;
                 
-            case "updateCategory":
+            case "private_updateCategory":
                 request.getRequestDispatcher("/category_update")
                         .forward(request, response);
                 break;
                 
-            case "deleteCategory":
+            case "private_deleteCategory":
             request.getRequestDispatcher("/category_delete")
                     .forward(request, response);
             break;
                             
-            case "addCategoryView":
+            case "private_addCategoryView":
                 request.getRequestDispatcher("/views/private_views/add_category.jsp")
                         .forward(request, response);
                 break;
                 
-             case "addCategory":
+             case "private_addCategory":
                 request.getRequestDispatcher("/category_add")
                         .forward(request, response);
                 break;
             
             //-------------------PRODUCT--------------------------//
-            case "products":
+            case "private_products":
                 request.getRequestDispatcher("/product_list")
                         .forward(request, response);
                 break;
 
-            case "updateProductView":
+            case "private_updateProductView":
                 request.getRequestDispatcher("/product_update_view")
                         .forward(request, response);
                 break;
                 
-            case "updateProduct":
+            case "private_updateProduct":
                 request.getRequestDispatcher("/product_update")
                         .forward(request, response);
                 break;
 
-            case "deleteProduct":
+            case "private_deleteProduct":
                 request.getRequestDispatcher("/product_delete")
                         .forward(request, response);
                 break;
 
-            case "addProductView":
+            case "private_addProductView":
                 request.getRequestDispatcher("/product_add_view")
                         .forward(request, response);
                 break;
 
-            case "addProduct":
+            case "private_addProduct":
                 request.getRequestDispatcher("/product_add")
                         .forward(request, response);
                 break;

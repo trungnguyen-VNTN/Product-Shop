@@ -1,10 +1,10 @@
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/header.css">
 
 <div class="header">
 
     <div class="logo">
         <a href="${pageContext.request.contextPath}/main_controller?action=home" class="product-link">
-            <img src="${pageContext.request.contextPath}/images/logo.jpg">
+            <img src="${pageContext.request.contextPath}/images/web_images/logo.jpg">
         <a/>
     </div>
     

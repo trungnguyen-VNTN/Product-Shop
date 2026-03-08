@@ -56,7 +56,7 @@ public class ProductDeleteController extends HttpServlet {
             dao.deleteRec(dao.getObjectById(productId));
         }
 
-        response.sendRedirect("main_controller?action=products");
+        response.sendRedirect("main_controller?action=private_products");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

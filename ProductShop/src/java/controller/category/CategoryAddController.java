@@ -68,7 +68,7 @@ public class CategoryAddController extends HttpServlet {
             CategoryDAO dao = new CategoryDAO(getServletContext());
             dao.insertRec(cate);
 
-            response.sendRedirect("main_controller?action=categories");
+            response.sendRedirect("main_controller?action=private_categories");
 
         } catch (Exception e) {
             e.printStackTrace();

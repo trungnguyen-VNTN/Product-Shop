@@ -6,7 +6,6 @@ package controller.account;
 
 import dao.AccountDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +42,7 @@ request.setCharacterEncoding("UTF-8");
         } else {
             dao.updateIsUsed(accountStr, true);
         }
-        request.getRequestDispatcher("main_controller?action=accounts").forward(request, response);
+        request.getRequestDispatcher("main_controller?action=private_accounts").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

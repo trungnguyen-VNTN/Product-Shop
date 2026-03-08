@@ -6,7 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Update Category</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/update_account.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/update_account.css">
     </head>
 
     <body>
@@ -22,7 +22,7 @@
 
             <div class="card">
 
-                <form action="main_controller?action=updateCategory" method="post" class="form-layout">
+                <form action="main_controller?action=private_updateCategory" method="post" class="form-layout">
 
                     <!-- Type ID (readonly) -->
                     <div class="form-group">
@@ -50,7 +50,7 @@
                     <!-- Buttons -->
                     <div class="form-footer">
                         <button type="submit" class="btn btn-success">Update Category</button>
-                        <a href="main_controller?action=categories" class="btn btn-secondary">Cancel</a>
+                        <a href="main_controller?action=private_categories" class="btn btn-secondary">Cancel</a>
                     </div>
 
                 </form>

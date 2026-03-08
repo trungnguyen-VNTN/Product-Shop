@@ -38,7 +38,7 @@ public class ProductDetailController extends HttpServlet {
         ProductDAO dao = new ProductDAO(getServletContext());
         Product product = dao.getObjectById(productId);
         request.setAttribute("product", product);
-        request.getRequestDispatcher("views/detail.jsp").forward(request, response);
+        request.getRequestDispatcher("views/public_views/detail.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

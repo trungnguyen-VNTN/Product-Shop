@@ -7,7 +7,6 @@ package controller.category;
 import dao.CategoryDAO;
 import error.CategoryError;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +71,7 @@ public class CategoryUpdateController extends HttpServlet {
             CategoryDAO dao = new CategoryDAO(getServletContext());
             dao.updateRec(cate);
 
-            response.sendRedirect("main_controller?action=categories");
+            response.sendRedirect("main_controller?action=private_categories");
 
         } catch (Exception e) {
             e.printStackTrace();

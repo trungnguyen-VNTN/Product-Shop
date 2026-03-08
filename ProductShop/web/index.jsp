@@ -10,17 +10,50 @@
         <title>Product Shop</title>
     </head>
     <body>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
-        <div class="containner">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/index.css">
+        <div class="container">
             <c:choose>
                 <c:when test="${sessionScope.user == null}">
-                    <%@ include file="views/header.jspf" %>
+                    <%@ include file="views/public_views/header.jspf" %>
                 </c:when>
                 <c:otherwise>
                     <%@ include file="views/private_views/private_header.jspf" %>
                 </c:otherwise>
             </c:choose>
 
+            <!-- BANNER -->
+            <div class="banner-container">
+
+                <!-- SLIDER LEFT -->
+                <div class="slider">
+
+                    <div class="slides">
+                        <img src="${pageContext.request.contextPath}/images/web_images/banner1.png">
+                        <img src="${pageContext.request.contextPath}/images/web_images/banner2.png">
+                        <img src="${pageContext.request.contextPath}/images/web_images/banner4.png">
+                    </div>
+
+                    <div class="dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT BANNERS -->
+                <div class="side-banners">
+
+                    <img src="${pageContext.request.contextPath}/images/web_images/banner3.png">
+
+                    <img src="${pageContext.request.contextPath}/images/web_images/banner5.png">
+
+                </div>
+
+            </div>
+
+
+            <!--CONTENT-->
             <div class="product-container">
 
                 <c:forEach var="p" items="${productList}">
@@ -67,7 +100,8 @@
                 </c:forEach>
 
             </div>
-            <%@include file="views/footer.jspf" %>
+            <%@include file="views/public_views/footer.jspf" %>
         </div>
+        <script src="${pageContext.request.contextPath}/js/slider.js"></script>
     </body>
 </html>

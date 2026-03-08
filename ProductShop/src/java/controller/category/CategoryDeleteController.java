@@ -38,7 +38,7 @@ public class CategoryDeleteController extends HttpServlet {
         if (category != null) {
             dao.deleteRec(dao.getObjectById(category));
         }
-        request.getRequestDispatcher("main_controller?action=categories").forward(request, response);
+        request.getRequestDispatcher("main_controller?action=private_categories").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

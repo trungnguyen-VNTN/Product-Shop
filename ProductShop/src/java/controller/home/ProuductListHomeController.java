@@ -6,7 +6,6 @@ package controller.home;
 
 import dao.ProductDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -40,7 +39,6 @@ public class ProuductListHomeController extends HttpServlet {
         List<Product> list = dao.listAll();
         request.setAttribute("productList", list);
         request.getRequestDispatcher("/index.jsp").forward(request, response);
-        return;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

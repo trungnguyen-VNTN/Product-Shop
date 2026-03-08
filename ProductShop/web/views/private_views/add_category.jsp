@@ -6,7 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Add Category</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/add_category.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/add_category.css">
     </head>
 
     <body>
@@ -22,7 +22,7 @@
 
             <div class="card">
 
-                <form action="main_controller?action=addCategory" method="post" class="form-layout">
+                <form action="main_controller?action=private_addCategory" method="post" class="form-layout">
 
                     <!-- Category Name -->
                     <div class="form-group">

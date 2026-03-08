@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Product Management</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product_list.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/product_list.css">
 </head>
 
 <body>
@@ -72,11 +72,11 @@
                         <td class="actions">
 
                             <!-- Update -->
-                            <a href="main_controller?action=updateProductView&productId=${pro.productId}" 
+                            <a href="main_controller?action=private_updateProductView&productId=${pro.productId}" 
                                class="btn btn-primary">Update</a>
 
                             <!-- Delete -->
-                            <a href="main_controller?action=deleteProduct&productId=${pro.productId}" 
+                            <a href="main_controller?action=private_deleteProduct&productId=${pro.productId}" 
                                class="btn btn-danger"
                                onclick="return confirm('Are you sure to delete this product?')">
                                 Delete
@@ -93,7 +93,7 @@
     </div>
 
     <div class="card-footer">
-        <a href="main_controller?action=addProductView" class="btn btn-add">
+        <a href="main_controller?action=private_addProductView" class="btn btn-add">
             + Add New Product
         </a>
     </div>
