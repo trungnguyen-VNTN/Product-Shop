@@ -143,7 +143,6 @@ public class ProductAddController extends HttpServlet {
 
                 String fileName = filePart.getSubmittedFileName();
 
-                // đường dẫn vật lý
                 String uploadPath = getServletContext().getRealPath("/images/sanPham");
                 File uploadDir = new File(uploadPath);
 
@@ -151,7 +150,6 @@ public class ProductAddController extends HttpServlet {
                     uploadDir.mkdirs();
                 }
 
-                // lưu file vào server
                 filePart.write(uploadPath + File.separator + fileName);
 
                 dbImagePath = "/images/sanPham/" + fileName;

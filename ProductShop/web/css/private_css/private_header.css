@@ -1,20 +1,26 @@
-html, body {
+html, body { 
     margin: 0;
     padding: 0;
     overflow-x: hidden;
     font-family: 'Segoe UI', sans-serif;
 }
 
+/* HEADER */
+
 .admin-header {
     width: 100%;
-    height: 70px;
+    height: 95px; /* tăng chiều cao header */
     padding: 0 40px;
-    background: #f1f1f1;
+    background: white;
+
     display: flex;
     align-items: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     box-sizing: border-box;
 }
+
+/* LAYOUT */
 
 .header-left,
 .header-center,
@@ -24,36 +30,80 @@ html, body {
     align-items: center;
 }
 
+/* LEFT */
+
 .header-left {
     justify-content: flex-start;
-
+    gap: 20px;
 }
+
+/* CENTER (MENU) */
 
 .header-center {
     justify-content: center;
-    font-size: 17px;
+    gap: 35px; /* tạo khoảng cách giữa menu */
 }
+
+/* RIGHT */
 
 .header-right {
     justify-content: flex-end;
+    gap: 20px;
 }
+
+/* NAV ITEM */
 
 .nav-item {
     text-decoration: none;
     color: #333;
-    font-weight: 500;
-    padding: 8px 18px;
-    border-radius: 8px;
-    transition: 0.25s;
+    font-size: 20px; /* tăng size chữ */
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+    padding: 6px 6px;
 }
 
-.nav-item:hover {
+/* underline hover giống header public */
+
+.nav-item::after {
+    content: "";
+    width: 0;
+    height: 3px;
     background: #ff3b2f;
-    color: white;
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    transition: 0.3s;
 }
+
+.nav-item:hover::after {
+    width: 100%;
+}
+
+/* WELCOME BOX */
+
+.welcome-box {
+    font-size: 18px; /* tăng size chữ */
+    color: #555;
+}
+
+/* ROLE */
+
+.role {
+    color: #ff3b2f;
+    font-weight: 700;
+}
+
+/* NAME */
+
+.fullname {
+    font-weight: 600;
+}
+
+/* LOGOUT */
 
 .logout-btn {
-    padding: 8px 18px;
+    padding: 10px 20px; /* nút to hơn */
     background: #ff3b2f;
     color: white;
     text-decoration: none;
@@ -64,18 +114,4 @@ html, body {
 
 .logout-btn:hover {
     background: #e63226;
-}
-
-.welcome-box {
-    font-size: 20px;
-    color: #555;
-}
-
-.role {
-    color: #ff3b2f;
-    font-weight: bold;
-}
-
-.fullname {
-    font-weight: 500;
 }

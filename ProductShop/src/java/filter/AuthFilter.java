@@ -5,9 +5,13 @@
 package filter;
 
 import java.io.IOException;
+import dao.AccountDAO;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -109,19 +113,27 @@ public class AuthFilter implements Filter {
 
         if (action  != null && action.contains("private")) {
 
-            HttpSession session = req.getSession(false);
-
-            if (session == null || session.getAttribute("user") == null) {
-                res.sendRedirect(req.getContextPath() + "/main_controller?action=login");
-                return;
-            }
-
-            Account acc = (Account) session.getAttribute("user");
-
-            if (!acc.isUsed()) {
-                session.invalidate();
-                res.sendRedirect(req.getContextPath() + "/main_controller?action=login");
-                return;
+            try {
+                HttpSession session = req.getSession(false);
+                
+                if (session == null || session.getAttribute("user") == null) {
+                    res.sendRedirect(req.getContextPath() + "/main_controller?action=login");
+                    return;
+                }
+                Account accInSession = (Account) session.getAttribute("user");
+                AccountDAO dao = new AccountDAO(req.getServletContext());
+                Account accInDB = dao.getObjectById(accInSession.getAccount());
+                System.out.println(accInDB.getAccount());
+                System.out.println(accInDB.isUsed());
+                if (!accInDB.isUsed()) {
+                    session.invalidate();
+                    res.sendRedirect(req.getContextPath() + "/main_controller?action=login");
+                    return;
+                }
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AuthFilter.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AuthFilter.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

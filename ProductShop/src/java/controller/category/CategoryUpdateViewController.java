@@ -35,7 +35,6 @@ public class CategoryUpdateViewController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
-        // Lấy typeId từ URL
         String typeId = request.getParameter("typeId");
 
         CategoryDAO dao = new CategoryDAO(getServletContext());

@@ -32,22 +32,18 @@ public class DashboardController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 try {
-            // Khởi tạo DAO
             AccountDAO accountDAO = new AccountDAO();
             CategoryDAO categoryDAO = new CategoryDAO();
             ProductDAO productDAO = new ProductDAO();
 
-            // Lấy tổng số
             int totalAccounts = accountDAO.countAccounts();
             int totalCategories = categoryDAO.countCategories();
             int totalProducts = productDAO.countProducts();
 
-            // Set attribute cho JSP
             request.setAttribute("totalAccounts", totalAccounts);
             request.setAttribute("totalCategories", totalCategories);
             request.setAttribute("totalProducts", totalProducts);
 
-            // Forward sang dashboard.jsp
             request.getRequestDispatcher("views/private_views/private.jsp")
                    .forward(request, response);
 

@@ -15,6 +15,7 @@
             <c:choose>
                 <c:when test="${sessionScope.user == null}">
                     <%@ include file="views/public_views/header.jspf" %>
+                    <%@ include file="views/public_views/navbar.jspf" %>
                 </c:when>
                 <c:otherwise>
                     <%@ include file="views/private_views/private_header.jspf" %>

@@ -1,21 +1,66 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/header.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
 
 <div class="header">
 
+    <!-- LOGO -->
     <div class="logo">
-        <a href="${pageContext.request.contextPath}/main_controller?action=home" class="product-link">
-            <img src="${pageContext.request.contextPath}/images/web_images/logo.jpg">
-        <a/>
-    </div>
-    
-    <div class="shop-title">
-        Products Shop
+        <a href="${pageContext.request.contextPath}/main_controller?action=home">
+            <img src="${pageContext.request.contextPath}/images/web_images/logo.png">   
+        </a>
     </div>
 
-    <div class="login">
-        <a href="${pageContext.request.contextPath}/main_controller?action=login" class="login-btn">
-            Login
-        </a>
+    <!-- SEARCH BAR -->
+    <form class="search-box"
+          action="${pageContext.request.contextPath}/main_controller"
+          method="get">
+
+        <input type="text"
+               name="keyword"
+               placeholder="Search products...">
+
+        <button type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+        <input type="hidden" name="action" value="search">
+
+    </form>
+
+    <!-- RIGHT SECTION -->
+    <div class="header-right">
+
+        <!-- CART -->
+        <div class="cart">
+            <a href="${pageContext.request.contextPath}/main_controller?action=cart">
+                <i class="fa-solid fa-cart-shopping"></i> Cart
+            </a>
+        </div>
+
+        <!-- USER PROFILE -->
+        <div class="user">
+
+            <c:choose>
+
+                <c:when test="${sessionScope.user != null}">
+                    <a href="${pageContext.request.contextPath}/main_controller?action=profile">
+                        <i class="fa-solid fa-user"></i> Acc
+                    </a>
+                </c:when>
+
+                <c:otherwise>
+                    <a class="login-btn"
+                       href="${pageContext.request.contextPath}/main_controller?action=login">
+                        <i class="fa-solid fa-user"></i> Login
+                    </a>
+                </c:otherwise>
+
+            </c:choose>
+
+        </div>
+
     </div>
 
 </div>

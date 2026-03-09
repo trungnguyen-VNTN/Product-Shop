@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/header.css">
+
+<div class="navbar">
+
+    <a
+       href="${pageContext.request.contextPath}/main_controller?action=home">
+       Home
+    </a>
+
+    <!-- MEGA MENU -->
+    <div class="mega-menu">
+
+        <a href="#">Categories</a>
+
+        <div class="mega-dropdown">
+
+            <a href="#">Electronics</a>
+            <a href="#">Clothing</a>
+            <a href="#">Home Appliances</a>
+            <a href="#">Accessories</a>
+
+        </div>
+
+    </div>
+
+    <a href="#">Contact Us</a>
+
+    <a href="#">About Us</a>
+
+</div>
