@@ -6,7 +6,8 @@ body {
 
 .page-wrapper {
     padding: 40px 0;
-    align-items: center;   /* căn giữa ngang */
+    align-items: center;   
+    margin-top:100px;
 }
 
 .page-title h2 {

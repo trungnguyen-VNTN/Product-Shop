@@ -1,10 +1,14 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/header.css">
 
 <div class="navbar">
 
     <a
-       href="${pageContext.request.contextPath}/main_controller?action=home">
-       Home
+        href="${pageContext.request.contextPath}/main_controller?action=home">
+        Home
     </a>
 
     <!-- MEGA MENU -->
@@ -13,12 +17,9 @@
         <a href="#">Categories</a>
 
         <div class="mega-dropdown">
-
-            <a href="#">Electronics</a>
-            <a href="#">Clothing</a>
-            <a href="#">Home Appliances</a>
-            <a href="#">Accessories</a>
-
+            <c:forEach var="c" items="${categoryList}">
+                <a href="${pageContext.request.contextPath}/main_controller?action=categoryFilter&id=${c.typeId}">${c.categoryName}</a>
+            </c:forEach>
         </div>
 
     </div>

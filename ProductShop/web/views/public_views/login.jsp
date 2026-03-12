@@ -13,7 +13,7 @@
         <div class="login-wrapper">
 
             <div class="login-box">
-                <h2>Đăng nhập</h2>
+                <h2>Login</h2>
 
                 <c:if test="${not empty error}">
                     <div class="error-box">
@@ -22,10 +22,10 @@
                 </c:if>
 
                 <form action="login" method="post">
-                    <input type="text" name="username" placeholder="Tên đăng nhập" required>
-                    <input type="password" name="password" placeholder="Mật khẩu" required>
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="password" name="password" placeholder="Password" required>
                     <input type="hidden" name="action" value="login">
-                    <button type="submit">ĐĂNG NHẬP</button>
+                    <button type="submit">LOGIN</button>
                 </form>
             </div>
 

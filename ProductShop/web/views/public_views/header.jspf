@@ -8,7 +8,7 @@
     <!-- LOGO -->
     <div class="logo">
         <a href="${pageContext.request.contextPath}/main_controller?action=home">
-            <img src="${pageContext.request.contextPath}/images/web_images/logo.png">   
+            <img src="${pageContext.request.contextPath}/images/web_images/logo2.png">   
         </a>
     </div>
 

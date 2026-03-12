@@ -37,7 +37,7 @@ public class MainController extends HttpServlet {
         }
 
         switch (action) {
-
+            //-------------------PUBLIC--------------------------//
             case "home":
                 request.getRequestDispatcher("/product_list_home")
                         .forward(request, response);
@@ -57,12 +57,17 @@ public class MainController extends HttpServlet {
                 request.getRequestDispatcher("/product_detail")
                         .forward(request, response);
                 break;
+                
+            case "categoryFilter":
+                request.getRequestDispatcher("/")
+                        .forward(request, response);
+                break;
             //-------------------PRIVATE--------------------------//
             case "private":
                 request.getRequestDispatcher("/dashboard")
                         .forward(request, response);
                 break;
-            //-------------------ACCOUNT--------------------------//
+                //-------------ACCOUNT----------------//
             case "private_accounts":
                 request.getRequestDispatcher("/account_list")
                         .forward(request, response);
@@ -98,7 +103,7 @@ public class MainController extends HttpServlet {
                         .forward(request, response);
                 break;
 
-                //-------------------CATEGORY--------------------------//
+                    //-------------CATEGORY--------------//
             case "private_categories":
                 request.getRequestDispatcher("/category_list")
                         .forward(request, response);
@@ -129,7 +134,7 @@ public class MainController extends HttpServlet {
                         .forward(request, response);
                 break;
             
-            //-------------------PRODUCT--------------------------//
+                //-------------------PRODUCT----------------------//
             case "private_products":
                 request.getRequestDispatcher("/product_list")
                         .forward(request, response);

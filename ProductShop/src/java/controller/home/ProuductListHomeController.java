@@ -4,6 +4,7 @@
  */
 package controller.home;
 
+import dao.CategoryDAO;
 import dao.ProductDAO;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Category;
 import model.Product;
 
 /**
@@ -35,9 +37,12 @@ public class ProuductListHomeController extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
-        ProductDAO dao = new ProductDAO(getServletContext());
-        List<Product> list = dao.listAll();
-        request.setAttribute("productList", list);
+        ProductDAO productDAO = new ProductDAO(getServletContext());
+        CategoryDAO categoryDAO = new CategoryDAO(getServletContext());
+        List<Category> categoryList = categoryDAO.listAll();
+        List<Product> productList = productDAO.listAll();
+        request.setAttribute("productList", productList);
+        request.setAttribute("categoryList", categoryList);
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 

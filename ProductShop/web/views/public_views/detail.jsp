@@ -5,19 +5,24 @@
 
 <div>
     <%@include file="header.jspf" %>
+    <%@include file="navbar.jspf" %>
     <div class="detail-wrapper">
 
+        <!-- PRODUCT IMAGE -->
         <div class="detail-img">
             <img src="${pageContext.request.contextPath}/${product.productImage}">
         </div>
 
+        <!-- PRODUCT INFO -->
         <div class="detail-info">
 
-            <div class="detail-name">
+            <h1 class="detail-name">
                 ${product.productName}
-            </div>
+            </h1>
 
+            <!-- PRICE -->
             <div class="price-area">
+
                 <c:if test="${product.discount > 0}">
                     <span class="old-price">
                         <fmt:formatNumber value="${product.price}" type="number" groupingUsed="true"/> đ
@@ -26,14 +31,56 @@
 
                 <span class="new-price">
                     <fmt:formatNumber 
-                        value="${product.price - (product.price * product.discount / 100)}" 
-                        type="number" 
+                        value="${product.price - (product.price * product.discount / 100)}"
+                        type="number"
                         groupingUsed="true"/> đ
                 </span>
+
             </div>
 
+            <!-- DESCRIPTION -->
             <div class="detail-desc">
                 ${product.brief}
+            </div>
+
+            <!-- ADD CART -->
+            <div class="add-cart-area">
+
+                <form action="main_controller" method="post">
+
+                    <input type="hidden" name="action" value="addToCart">
+                    <input type="hidden" name="productId" value="${product.productId}">
+
+                    <div class="quantity-box">
+                        <span>Quantity</span>
+
+                        <div class="quantity-control">
+                            <button type="button" onclick="decrease()">−</button>
+
+                            <input id="qty" type="text" name="quantity" value="1" min="1">
+
+                            <button type="button" onclick="increase()">+</button>
+                        </div>
+                    </div>
+
+                    <c:choose>
+
+                        <c:when test="${not empty sessionScope.user}">
+                            <button class="add-cart-btn">
+                                Add to Cart
+                            </button>
+                        </c:when>
+
+                        <c:otherwise>
+                            <a href="main_controller?action=login" class="add-cart-btn">
+                                Add to Cart
+                            </a>
+                        </c:otherwise>
+
+                    </c:choose>
+
+                </form>
+
             </div>
 
         </div>
@@ -41,4 +88,4 @@
     </div>
     <%@include file="footer.jspf" %>
 </div>
- 
+<script src="${pageContext.request.contextPath}/js/quantity.js"></script>
