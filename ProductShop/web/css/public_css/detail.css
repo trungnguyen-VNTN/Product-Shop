@@ -127,3 +127,12 @@ body {
 .add-cart-btn:hover{
     background:#e64a19;
 }
+
+.success-message{
+    text-align: center;
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}

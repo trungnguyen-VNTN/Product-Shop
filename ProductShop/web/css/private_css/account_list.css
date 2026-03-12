@@ -63,14 +63,22 @@ body {
     font-weight: 500;
 }
 
-.badge-admin {
-    background: #e3f2fd;
-    color: #1565c0;
+/* Administrator */
+.badge-admin{
+    background:#fde2e1;
+    color:#d93025;
 }
 
-.badge-staff {
-    background: #ede7f6;
-    color: #5e35b1;
+/* Staff */
+.badge-staff{
+    background:#ece6ff;
+    color:#6f42c1;
+}
+
+/* Customer */
+.badge-customer{
+    background:#e7f1ff;
+    color:#1a73e8;
 }
 
 .badge-active {

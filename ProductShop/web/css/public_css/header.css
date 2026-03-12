@@ -100,6 +100,35 @@ html, body {
     color:#333;
 }
 
+.cart-icon{
+    position: relative;
+    display: inline-block;
+}
+
+.cart-badge{
+    position: absolute;
+
+    top: -14px;
+    right: -10px;
+
+    background: red;
+    color: white;
+
+    font-size: 11px;
+    padding: 2px 6px;
+
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.cart i{
+    transition:0.2s;
+}
+
+.cart a:hover i{
+    transform: scale(1.2);
+}
+
 /* USER */
 
 .user a{

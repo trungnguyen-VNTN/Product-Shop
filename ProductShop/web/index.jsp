@@ -13,13 +13,16 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/index.css">
         <div class="container">
             <c:choose>
-                <c:when test="${sessionScope.user == null}">
+
+                <c:when test="${sessionScope.user == null || sessionScope.user.roleInSystem == 0}">
                     <%@ include file="views/public_views/header.jspf" %>
                     <%@ include file="views/public_views/navbar.jspf" %>
                 </c:when>
+
                 <c:otherwise>
                     <%@ include file="views/private_views/private_header.jspf" %>
                 </c:otherwise>
+
             </c:choose>
 
             <!-- BANNER -->

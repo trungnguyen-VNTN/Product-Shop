@@ -35,7 +35,16 @@
         <!-- CART -->
         <div class="cart">
             <a href="${pageContext.request.contextPath}/main_controller?action=cart">
-                <i class="fa-solid fa-cart-shopping"></i> Cart
+
+                <span class="cart-icon">
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                    <c:if test="${cartCount > 0}">
+                        <span class="cart-badge">${cartCount}</span>
+                    </c:if>
+                </span>
+
+                Cart
             </a>
         </div>
 

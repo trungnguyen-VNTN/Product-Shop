@@ -62,6 +62,26 @@ public class MainController extends HttpServlet {
                 request.getRequestDispatcher("/")
                         .forward(request, response);
                 break;
+            //-------------------CART--------------------------//
+            case "addToCart":
+                request.getRequestDispatcher("/cart_add")
+                        .forward(request, response);
+                break; 
+                
+            case "cart":
+                request.getRequestDispatcher("/cart_view")
+                        .forward(request, response);
+                break; 
+                
+            case "deleteCart":
+                request.getRequestDispatcher("/cart_delete")
+                        .forward(request, response);
+                break;
+                
+            case "updateCartQuantity":
+                request.getRequestDispatcher("/cart_quantity_update")
+                        .forward(request, response);
+                break;
             //-------------------PRIVATE--------------------------//
             case "private":
                 request.getRequestDispatcher("/dashboard")

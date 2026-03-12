@@ -4,6 +4,8 @@
  */
 package controller.home;
 
+import dao.CartDAO;
+import dao.CartDetailDAO;
 import dao.CategoryDAO;
 import dao.ProductDAO;
 import java.io.IOException;
@@ -15,6 +17,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Account;
+import model.Cart;
 import model.Category;
 import model.Product;
 
@@ -34,9 +39,11 @@ public class ProuductListHomeController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException, Exception {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+
+        //---------------------Product List-----------------//
         ProductDAO productDAO = new ProductDAO(getServletContext());
         CategoryDAO categoryDAO = new CategoryDAO(getServletContext());
         List<Category> categoryList = categoryDAO.listAll();
@@ -64,6 +71,8 @@ public class ProuductListHomeController extends HttpServlet {
             Logger.getLogger(ProuductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(ProuductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProuductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -83,6 +92,8 @@ public class ProuductListHomeController extends HttpServlet {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ProuductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            Logger.getLogger(ProuductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(ProuductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

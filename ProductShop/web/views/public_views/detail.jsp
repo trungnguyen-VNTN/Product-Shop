@@ -2,10 +2,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/detail.css">
+<c:choose>
+
+    <c:when test="${sessionScope.user == null || sessionScope.user.roleInSystem == 0}">
+        <%@ include file="header.jspf" %>
+        <%@ include file="navbar.jspf" %>
+    </c:when>
+
+    <c:otherwise>
+        <%@ include file="/views/private_views/private_header.jspf" %>
+    </c:otherwise>
+    
+</c:choose>
 
 <div>
-    <%@include file="header.jspf" %>
-    <%@include file="navbar.jspf" %>
+
     <div class="detail-wrapper">
 
         <!-- PRODUCT IMAGE -->
@@ -46,7 +57,7 @@
             <!-- ADD CART -->
             <div class="add-cart-area">
 
-                <form action="main_controller" method="post">
+                <form action="main_controller?action=addToCart" method="post">
 
                     <input type="hidden" name="action" value="addToCart">
                     <input type="hidden" name="productId" value="${product.productId}">
@@ -80,6 +91,13 @@
                     </c:choose>
 
                 </form>
+                <c:if test="${not empty sessionScope.message}">
+                    <div class="success-message">
+                        ${sessionScope.message}
+                    </div>
+
+                    <c:remove var="message" scope="session"/>
+                </c:if>
 
             </div>
 
