@@ -44,6 +44,54 @@ create table products(
 go
 
 
+-------------------------------------Phần Database em thêm------------------------------------------------------
+-- 4: Tạo table [Cart] để lưu cart của từng người dùng
+create table cart(
+    cartId int identity primary key,
+    account varchar(20) not null,
+    foreign key(account) references accounts(account)
+);
+go
+
+-- 5: Tạo table [CartDetail] để lưu các item trong cart
+create table cartDetail(
+    cartId int not null,
+    productId varchar(10) not null,
+    quantity int default 1,
+    primary key(cartId, productId),
+    foreign key(cartId) references cart(cartId),
+    foreign key(productId) references products(productId)
+);
+go
+
+-- 6: Tạo table [Orders] để lưu order mà người dùng đã mua
+create table orders(
+    orderId int identity primary key,
+    account varchar(20) not null,
+    orderDate datetime default GETDATE(),
+    shippingAddress nvarchar(200),
+    phone nvarchar(20),
+    totalAmount int default 0,
+    status int default 0,
+    foreign key(account) references accounts(account)
+);
+go
+
+-- 7: Tạo table [OrderDetail] để lưu order detail mà người dùng đã mua
+create table orderDetail(
+    orderId int not null,
+    productId varchar(10) not null,
+    quantity int default 1,
+    price int default 0,
+    discount int default 0 check (discount >= 0 and discount <= 100),
+    primary key(orderId, productId),
+    foreign key(orderId) references orders(orderId),
+    foreign key(productId) references products(productId)
+);
+go
+----------------------------------------------------------------------------------------------------------------
+
+
 -- YC 1: Nhập thông tin tài khoản, tối thiểu 5 thành viên sẽ dùng để làm việc với các trang: Administrative pages
 insert into accounts
 values('manager','123',N'Nguyễn Minh','Quang','1996/06/12',1,'0935694223',1,2)
@@ -146,7 +194,7 @@ insert into products (productId, productName, productImage, brief, account, pric
 					 'manager', 315000,0,4, N'Bộ');
 go
 insert into products (productId, productName, productImage, brief, account, price, discount, typeId, unit)  
-              values('6075086733', N'Áo thể thao Fitme Body Compression', '/images/sanPham/aoTheThaoFitness.pnj',
+              values('6075086733', N'Áo thể thao Fitme Body Compression', '/images/sanPham/aoTheThaoFitness.png',
 			          N'Áo thể thao Body Compression Fitme cao cấp chuyên nghiệp dành cho những ai có nhu cầu luyện tập với cường độ cao
 						Phù hợp cho các môn thể thao tập gym, bóng rổ, bóng đá, bóng chuyền, giữ nhiệt. 
 						Quần chất co dãn cao, fit cơ thể, tôn dáng người', 
