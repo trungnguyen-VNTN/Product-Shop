@@ -4,8 +4,6 @@
  */
 package controller.home;
 
-import dao.CartDAO;
-import dao.CartDetailDAO;
 import dao.CategoryDAO;
 import dao.ProductDAO;
 import java.io.IOException;
@@ -14,12 +12,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Account;
-import model.Cart;
 import model.Category;
 import model.Product;
 
@@ -27,7 +23,8 @@ import model.Product;
  *
  * @author PC
  */
-public class ProuductListHomeController extends HttpServlet {
+@WebServlet(name = "AllProductListHomeController", urlPatterns = {"/all_product_list_home"})
+public class AllProductListHomeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,18 +36,19 @@ public class ProuductListHomeController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException, Exception {
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
-
-        //---------------------Product List-----------------//
         ProductDAO productDAO = new ProductDAO(getServletContext());
         CategoryDAO categoryDAO = new CategoryDAO(getServletContext());
+        
         List<Category> categoryList = categoryDAO.listAll();
         List<Product> productList = productDAO.listAll();
-        request.setAttribute("productList", productList);
+        
         request.setAttribute("categoryList", categoryList);
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        request.setAttribute("productList", productList);
+        
+        request.getRequestDispatcher("/views/public_views/products.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,11 +66,9 @@ public class ProuductListHomeController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProuductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AllProductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ProuductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ProuductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AllProductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -90,11 +86,9 @@ public class ProuductListHomeController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProuductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AllProductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ProuductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ProuductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AllProductListHomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

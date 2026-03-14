@@ -4,8 +4,16 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/viewOrderDetail.css">
 
-<%@ include file="header.jspf" %>
-<%@ include file="navbar.jspf" %>
+<c:choose>
+    <c:when test="${sessionScope.user == null || sessionScope.user.roleInSystem == 0}">
+        <%@ include file="header.jspf" %>
+        <%@ include file="navbar.jspf" %>
+    </c:when>
+    <c:otherwise>
+        <%@ include file="/views/private_views/private_header.jspf" %>
+    </c:otherwise>
+</c:choose>
+
 
 <div class="order-detail-container">
 

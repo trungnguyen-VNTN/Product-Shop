@@ -348,4 +348,334 @@ public class ProductDAO implements Accessible<Product> {
         }
         return count;
     }
+
+    public List<Product> getNewestProducts() {
+        String sqlCommand
+                = "SELECT TOP 8 p.*, "
+                + "a.account AS a_account, "
+                + "a.pass, "
+                + "a.firstName, "
+                + "a.lastName, "
+                + "a.birthday, "
+                + "a.gender, "
+                + "a.phone, "
+                + "a.roleInSystem, "
+                + "a.isUse, "
+                + "c.typeId AS c_typeId, "
+                + "c.categoryName, "
+                + "c.memo "
+                + "FROM Products p "
+                + "JOIN Categories c ON p.typeId = c.typeId "
+                + "JOIN Accounts a ON p.account = a.account "
+                + "ORDER BY p.postedDate DESC";
+
+        List<Product> list = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlCommand);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product pro = toProduct(rs);
+                list.add(pro);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+
+        return list;
+    }
+
+    public List<Product> getProductsByPriceRange(int min, int max) {
+        String sqlCommand
+                = "SELECT p.*, "
+                + "a.account AS a_account, "
+                + "a.pass, "
+                + "a.firstName, "
+                + "a.lastName, "
+                + "a.birthday, "
+                + "a.gender, "
+                + "a.phone, "
+                + "a.roleInSystem, "
+                + "a.isUse, "
+                + "c.typeId AS c_typeId, "
+                + "c.categoryName, "
+                + "c.memo "
+                + "FROM Products p "
+                + "JOIN Categories c ON p.typeId = c.typeId "
+                + "JOIN Accounts a ON p.account = a.account "
+                + "WHERE p.price BETWEEN ? AND ? "
+                + "ORDER BY NEWID()";
+
+        List<Product> list = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlCommand);
+            ps.setInt(1, min);
+            ps.setInt(2, max);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product pro = toProduct(rs);
+                list.add(pro);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+
+        return list;
+    }
+
+    public List<Product> getProductsAbovePrice(int min) {
+        String sqlCommand
+                = "SELECT p.*, "
+                + "a.account AS a_account, "
+                + "a.pass, "
+                + "a.firstName, "
+                + "a.lastName, "
+                + "a.birthday, "
+                + "a.gender, "
+                + "a.phone, "
+                + "a.roleInSystem, "
+                + "a.isUse, "
+                + "c.typeId AS c_typeId, "
+                + "c.categoryName, "
+                + "c.memo "
+                + "FROM Products p "
+                + "JOIN Categories c ON p.typeId = c.typeId "
+                + "JOIN Accounts a ON p.account = a.account "
+                + "WHERE p.price > ? "
+                + "ORDER BY NEWID()";
+
+        List<Product> list = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlCommand);
+            ps.setInt(1, min);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product pro = toProduct(rs);
+                list.add(pro);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+
+        return list;
+    }
+
+    public List<Product> getBestSellerProducts() {
+
+        String sqlCommand
+                = "SELECT TOP 4 p.*, "
+                + "a.account AS a_account, "
+                + "a.pass, "
+                + "a.firstName, "
+                + "a.lastName, "
+                + "a.birthday, "
+                + "a.gender, "
+                + "a.phone, "
+                + "a.roleInSystem, "
+                + "a.isUse, "
+                + "c.typeId AS c_typeId, "
+                + "c.categoryName, "
+                + "c.memo "
+                + "FROM Products p "
+                + "JOIN ( "
+                + "    SELECT productId, SUM(quantity) AS totalSold "
+                + "    FROM OrderDetail "
+                + "    GROUP BY productId "
+                + ") od ON p.productId = od.productId "
+                + "JOIN Categories c ON p.typeId = c.typeId "
+                + "JOIN Accounts a ON p.account = a.account "
+                + "ORDER BY od.totalSold DESC";
+
+        List<Product> list = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(sqlCommand);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Product pro = toProduct(rs);
+                list.add(pro);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+
+        return list;
+    }
+
+    public List<Product> filterProducts(
+            String category,
+            Double minPrice,
+            Double maxPrice,
+            String discount,
+            String sort) {
+
+        String sqlCommand
+                = "SELECT p.*, "
+                + "a.account AS a_account, "
+                + "a.pass, "
+                + "a.firstName, "
+                + "a.lastName, "
+                + "a.birthday, "
+                + "a.gender, "
+                + "a.phone, "
+                + "a.roleInSystem, "
+                + "a.isUse, "
+                + "c.typeId AS c_typeId, "
+                + "c.categoryName, "
+                + "c.memo "
+                + "FROM Products p "
+                + "JOIN Categories c ON p.typeId = c.typeId "
+                + "JOIN Accounts a ON p.account = a.account "
+                + "WHERE 1=1 ";
+
+        if (category != null && !category.isEmpty()) {
+            sqlCommand += " AND p.typeId = ? ";
+        }
+
+        if (minPrice != null && maxPrice != null) {
+            sqlCommand += " AND p.price BETWEEN ? AND ? ";
+        }
+
+        if ("true".equals(discount)) {
+            sqlCommand += " AND p.discount > 0 ";
+        }
+
+        if ("false".equals(discount)) {
+            sqlCommand += " AND p.discount = 0 ";
+        }
+
+        if (sort != null) {
+            switch (sort) {
+                case "priceAsc":
+                    sqlCommand += " ORDER BY p.price ASC ";
+                    break;
+
+                case "priceDesc":
+                    sqlCommand += " ORDER BY p.price DESC ";
+                    break;
+
+                case "newest":
+                    sqlCommand += " ORDER BY p.postedDate DESC ";
+                    break;
+            }
+        }
+
+        List<Product> list = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            ps = con.prepareStatement(sqlCommand);
+
+            int index = 1;
+
+            if (category != null && !category.isEmpty()) {
+                ps.setInt(index, Integer.parseInt(category));
+                index++;
+            }
+
+            if (minPrice != null && maxPrice != null) {
+                ps.setDouble(index, minPrice);
+                index++;
+                ps.setDouble(index, maxPrice);
+                index++;
+            }
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Product pro = toProduct(rs);
+                list.add(pro);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+
+        return list;
+    }
 }

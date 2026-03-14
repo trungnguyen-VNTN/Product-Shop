@@ -31,6 +31,7 @@
                             <th>Gender</th>
                             <th>Phone</th>
                             <th>Role</th>
+                            <th>Segment</th>
                             <th>Status</th>
                             <th class="action-col">Action</th>
                         </tr>
@@ -82,6 +83,30 @@
                                         <c:otherwise>
                                             <span class="badge badge-customer">
                                                 Customer
+                                            </span>
+                                        </c:otherwise>
+
+                                    </c:choose>
+                                </td>
+
+                                <td>
+                                    <c:choose>
+
+                                        <c:when test="${acc.priceSegment == 0}">
+                                            <span class="badge badge-admin">
+                                                Low
+                                            </span>
+                                        </c:when>
+
+                                        <c:when test="${acc.priceSegment == 1}">
+                                            <span class="badge badge-staff">
+                                                Mid
+                                            </span>
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <span class="badge badge-customer">
+                                                High
                                             </span>
                                         </c:otherwise>
 

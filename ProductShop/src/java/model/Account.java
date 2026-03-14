@@ -13,11 +13,13 @@ public class Account {
     private String phone;
     private boolean used;
     private int roleInSystem;
+    private int priceSegment;
 
     public Account() {
+        this.priceSegment = 0;
     }
 
-    public Account(String account, String pass, String lastName, String firstName, Date birthday, boolean gender, String phone, boolean used, int roleInSystem) {
+    public Account(String account, String pass, String lastName, String firstName, Date birthday, boolean gender, String phone, boolean used, int roleInSystem, int priceSegment) {
         this.account = account;
         this.pass = pass;
         this.lastName = lastName;
@@ -27,6 +29,7 @@ public class Account {
         this.phone = phone;
         this.used = used;
         this.roleInSystem = roleInSystem;
+        this.priceSegment = priceSegment;
     }
 
     public String getAccount() {
@@ -100,5 +103,14 @@ public class Account {
     public void setRoleInSystem(int roleInSystem) {
         this.roleInSystem = roleInSystem;
     }
+
+    public int getPriceSegment() {
+        return priceSegment;
+    }
+
+    public void setPriceSegment(int priceSegment) {
+        this.priceSegment = priceSegment;
+    }
+    
 
 }

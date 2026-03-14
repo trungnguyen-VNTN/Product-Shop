@@ -81,10 +81,6 @@
         <servlet-class>controller.category.CategoryDeleteController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ProuductListHomeController</servlet-name>
-        <servlet-class>controller.home.ProuductListHomeController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ProductListController</servlet-name>
         <servlet-class>controller.product.ProductListController</servlet-class>
     </servlet>
@@ -167,10 +163,6 @@
     <servlet-mapping>
         <servlet-name>CategoryDeleteController</servlet-name>
         <url-pattern>/category_delete</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProuductListHomeController</servlet-name>
-        <url-pattern>/product_list_home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductListController</servlet-name>

@@ -12,18 +12,11 @@
     </a>
 
     <!-- MEGA MENU -->
-    <div class="mega-menu">
+    <a href="${pageContext.request.contextPath}/main_controller?action=products">
+        Products
+    </a>
 
-        <a href="#">Categories</a>
 
-        <div class="mega-dropdown">
-            <c:forEach var="c" items="${categoryList}">
-                <a href="${pageContext.request.contextPath}/main_controller?action=categoryFilter&id=${c.typeId}">${c.categoryName}</a>
-            </c:forEach>
-        </div>
-
-    </div>
-    
     <a href="main_controller?action=viewOrder">Orders</a>
 
     <a href="#">Contact Us</a>

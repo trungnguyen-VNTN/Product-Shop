@@ -46,26 +46,36 @@ public class MainController extends HttpServlet {
                         .forward(request, response);
                 break;
 
+                
             case "login":
                 request.getRequestDispatcher("views/public_views/login.jsp")
                         .forward(request, response);
                 break;
 
+                
             case "logout":
                 request.getRequestDispatcher("/logout")
                         .forward(request, response);
                 break;
 
+                
             case "detail":
                 request.getRequestDispatcher("/product_detail")
                         .forward(request, response);
                 break;
-
-            case "categoryFilter":
-                request.getRequestDispatcher("/")
+                
+                
+            case "products":
+                request.getRequestDispatcher("/all_product_list_home")
                         .forward(request, response);
                 break;
-
+                
+                
+            case "productFilter":
+                request.getRequestDispatcher("/product_filter")
+                        .forward(request, response);
+                break;
+                
             //-------------------CART--------------------------//
             case "addToCart":
                 request.getRequestDispatcher("/cart_add")

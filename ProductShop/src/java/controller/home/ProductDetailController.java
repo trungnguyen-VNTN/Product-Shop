@@ -1,95 +1,107 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller.home;
 
 import dao.ProductDAO;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Product;
 
-/**
- *
- * @author PC
- */
 public class ProductDetailController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
+
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+
         String productId = request.getParameter("id");
+
         ProductDAO dao = new ProductDAO(getServletContext());
         Product product = dao.getObjectById(productId);
+
+        if (product == null) {
+            response.sendRedirect("product_list_home");
+            return;
+        }
+
+        /* ---------------- COOKIE: VIEWED PRODUCTS ---------------- */
+
+        Cookie[] cookies = request.getCookies();
+        String viewed = "";
+
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if ("viewedProducts".equals(c.getName())) {
+                    viewed = c.getValue();
+                }
+            }
+        }
+
+        /* thêm product mới vào cookie */
+        String newValue = product.getProductId() + "-" + product.getPrice() + "_";
+        viewed = viewed + newValue;
+
+        /* giới hạn tối đa 10 sản phẩm */
+        String[] arr = viewed.split("_");
+
+        if (arr.length > 10) {
+
+            StringBuilder temp = new StringBuilder();
+
+            for (int i = arr.length - 10; i < arr.length; i++) {
+
+                if (!arr[i].isEmpty()) {
+                    temp.append(arr[i]).append("_");
+                }
+            }
+
+            viewed = temp.toString();
+        }
+
+        /* encode cookie để tránh lỗi ký tự */
+        String encodedViewed = URLEncoder.encode(viewed, "UTF-8");
+
+        Cookie cookie = new Cookie("viewedProducts", encodedViewed);
+        cookie.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
+        cookie.setPath("/");
+
+        response.addCookie(cookie);
+
+        /* ---------------- SEND DATA TO JSP ---------------- */
+
         request.setAttribute("product", product);
-        request.getRequestDispatcher("views/public_views/detail.jsp").forward(request, response);
+
+        request.getRequestDispatcher("views/public_views/detail.jsp")
+                .forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProductDetailController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductDetailController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProductDetailController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductDetailController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Product Detail Controller";
+    }
 }

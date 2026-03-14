@@ -45,6 +45,7 @@ public class AccountUpdateController extends HttpServlet {
         String phone = request.getParameter("phone");
         boolean used = Boolean.parseBoolean(request.getParameter("used"));
         int roleInSystem = Integer.parseInt(request.getParameter("roleInSystem"));
+        int priceSegment = Integer.parseInt(request.getParameter("priceSegment"));
         AccountError error = new AccountError();
         boolean valid = true;
 
@@ -103,7 +104,7 @@ public class AccountUpdateController extends HttpServlet {
             Account acc = new Account(
                     account, pass, lastName, firstName,
                     birthday, gender, phone,
-                    used, roleInSystem
+                    used, roleInSystem, priceSegment
             );
             
             AccountDAO dao = new AccountDAO(getServletContext());

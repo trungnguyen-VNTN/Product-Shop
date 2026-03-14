@@ -39,7 +39,7 @@ public class AccountDAO implements Accessible<Account> {
         int result = 0;
         PreparedStatement ps = null;
         try {
-            String sqlCommand = "INSERT INTO Accounts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sqlCommand = "INSERT INTO Accounts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             ps = con.prepareStatement(sqlCommand);
             ps.setString(1, obj.getAccount());
             ps.setString(2, obj.getPass());
@@ -50,6 +50,7 @@ public class AccountDAO implements Accessible<Account> {
             ps.setString(7, obj.getPhone());
             ps.setBoolean(8, obj.isUsed());
             ps.setInt(9, obj.getRoleInSystem());
+            ps.setInt(10, obj.getPriceSegment());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,7 +81,8 @@ public class AccountDAO implements Accessible<Account> {
                     + "gender = ?,"
                     + "phone = ?,"
                     + "isUse = ?,"
-                    + "roleInSystem = ? "
+                    + "roleInSystem = ?, "
+                    + "priceSegment = ? "
                     + "WHERE account = ?";
             ps = con.prepareStatement(sqlCommand);
             ps.setString(1, obj.getPass());
@@ -91,7 +93,8 @@ public class AccountDAO implements Accessible<Account> {
             ps.setString(6, obj.getPhone());
             ps.setBoolean(7, obj.isUsed());
             ps.setInt(8, obj.getRoleInSystem());
-            ps.setString(9, obj.getAccount());
+            ps.setInt(9, obj.getPriceSegment());
+            ps.setString(10, obj.getAccount());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -155,6 +158,7 @@ public class AccountDAO implements Accessible<Account> {
                 result.setPhone(rs.getString("phone"));
                 result.setUsed(rs.getBoolean("isUse"));
                 result.setRoleInSystem(rs.getInt("roleInSystem"));
+                result.setPriceSegment(rs.getInt("priceSegment"));
             }
             if (result != null) {
                 return result;
@@ -198,6 +202,7 @@ public class AccountDAO implements Accessible<Account> {
                 account.setPhone(rs.getString("phone"));
                 account.setUsed(rs.getBoolean("isUse"));
                 account.setRoleInSystem(rs.getInt("roleInSystem"));
+                account.setPriceSegment(rs.getInt("priceSegment"));
                 result.add(account);
             }
         } catch (SQLException ex) {
@@ -239,6 +244,7 @@ public class AccountDAO implements Accessible<Account> {
                 account.setPhone(rs.getString("phone"));
                 account.setUsed(rs.getBoolean("isUse"));
                 account.setRoleInSystem(rs.getInt("roleInSystem"));
+                account.setPriceSegment(rs.getInt("priceSegment"));
                 result.add(account);
             }
         } catch (SQLException ex) {
@@ -316,6 +322,7 @@ public class AccountDAO implements Accessible<Account> {
                 result.setPhone(rs.getString("phone"));
                 result.setUsed(rs.getBoolean("isUse"));
                 result.setRoleInSystem(rs.getInt("roleInSystem"));
+                result.setPriceSegment(rs.getInt("priceSegment"));
             }
             rs.close();
             ps.close();
@@ -342,4 +349,20 @@ public class AccountDAO implements Accessible<Account> {
         }
         return count;
     }
+
+    public void updatePriceSegment(String account, int segment) throws Exception {
+
+        String sql = "UPDATE accounts SET priceSegment = ? WHERE account = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, segment);
+            ps.setString(2, account);
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

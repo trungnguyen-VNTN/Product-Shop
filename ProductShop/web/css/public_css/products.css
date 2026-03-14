@@ -5,7 +5,7 @@
 }
 
 .container {
-    width: 100%;
+    max-width: 1500px;
     margin-right: auto;
     margin-left: auto;
     background:#fff6f2;
@@ -89,19 +89,6 @@
 }
 
 /*CONTENT*/
-.content{
-    max-width:1300px;
-    margin:auto;
-    padding:0 20px;
-}
-
-.section{
-    margin-top:50px;
-    background:#f8f9fb;
-    border:1px solid #e5e5e5;
-    border-radius:12px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.05);
-}
 
 .section-header{
     background:white;
@@ -134,7 +121,7 @@
         to right,
         transparent,
         #ff4d4f
-    );
+        );
 }
 
 /* RIGHT LINE */
@@ -146,13 +133,152 @@
         to left,
         transparent,
         #ff4d4f
-    );
+        );
 }
 
 .section-icon{
     color:#ff4d4f;
     font-size:22px;
 }
+/* ================= FILTER BAR ================= */
+
+.filter-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 25px;
+    padding: 25px;
+    margin: 30px 0;
+    padding-top: 40px;
+
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+
+    flex-wrap: wrap;
+}
+
+
+/* ================= FILTER ITEM ================= */
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+
+/* ================= LABEL ================= */
+
+.filter-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+
+/* ICON */
+
+.filter-label i {
+    color: #ff4d4f;
+}
+
+
+/* ================= SELECT ================= */
+
+.filter-select {
+    min-width: 180px;
+    padding: 10px 14px;
+
+    border-radius: 10px;
+    border: 1px solid #e4e4e4;
+
+    font-size: 14px;
+    background: white;
+
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+
+/* hover */
+
+.filter-select:hover {
+    border-color: #ff4d4f;
+}
+
+
+/* focus */
+
+.filter-select:focus {
+    outline: none;
+    border-color: #ff4d4f;
+    box-shadow: 0 0 5px rgba(255, 77, 79, 0.3);
+}
+
+
+/* ================= BUTTON AREA ================= */
+
+.filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+/* FILTER BUTTON */
+
+.filter-btn {
+    padding: 11px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #ff4d4f;
+    color: white;
+
+    font-weight: 600;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    transition: 0.2s;
+}
+
+.filter-btn:hover {
+    background: #e43d3f;
+}
+
+
+/* RESET BUTTON */
+
+.reset-btn {
+    padding: 11px 18px;
+
+    border-radius: 10px;
+
+    background: #f3f3f3;
+    color: #333;
+
+    font-weight: 600;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    transition: 0.2s;
+}
+
+.reset-btn:hover {
+    background: #e8e8e8;
+}
+
 
 .product-container {
     display: grid;
@@ -228,8 +354,6 @@
     background: #f5f5f5;
 }
 
-
-
 .discount {
     position: absolute;
     top: 10px;
@@ -264,3 +388,4 @@
     font-size:18px;
     color:#777;
 }
+
