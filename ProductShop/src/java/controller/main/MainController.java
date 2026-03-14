@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.main;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author PC
  */
 @MultipartConfig
+@WebServlet(name = "MainController", urlPatterns = {"/main_controller"})
 public class MainController extends HttpServlet {
 
     /**
@@ -29,8 +31,9 @@ public class MainController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        String action = request.getParameter("action");
+   // ===== DEBUG ENCODING =====
+    request.setCharacterEncoding("UTF-8");
+    String action = request.getParameter("action");
 
         if (action == null) {
             action = "home";
@@ -57,29 +60,57 @@ public class MainController extends HttpServlet {
                 request.getRequestDispatcher("/product_detail")
                         .forward(request, response);
                 break;
-                
+
             case "categoryFilter":
                 request.getRequestDispatcher("/")
                         .forward(request, response);
                 break;
+
             //-------------------CART--------------------------//
             case "addToCart":
                 request.getRequestDispatcher("/cart_add")
                         .forward(request, response);
-                break; 
-                
+                break;
+
             case "cart":
                 request.getRequestDispatcher("/cart_view")
                         .forward(request, response);
-                break; 
-                
+                break;
+
             case "deleteCart":
                 request.getRequestDispatcher("/cart_delete")
                         .forward(request, response);
                 break;
-                
+
             case "updateCartQuantity":
                 request.getRequestDispatcher("/cart_quantity_update")
+                        .forward(request, response);
+                break;
+
+            case "checkout":
+                request.getRequestDispatcher("/cart_checkout")
+                        .forward(request, response);
+                break;
+
+            //-------------------ORDER--------------------------//
+            case "placeOrder":
+                request.getRequestDispatcher("/order_place")
+                        .forward(request, response);
+                break;
+
+            case "orderSuccess":
+                request.getRequestDispatcher("views/public_views/orderSuccess.jsp")
+                        .forward(request, response);
+                break;
+
+            case "viewOrder":
+                request.getRequestDispatcher("/order_view")
+                        .forward(request, response);
+                break;
+                
+                
+            case "viewOrderDetail":
+                request.getRequestDispatcher("/order_detail_view")
                         .forward(request, response);
                 break;
             //-------------------PRIVATE--------------------------//
@@ -87,7 +118,7 @@ public class MainController extends HttpServlet {
                 request.getRequestDispatcher("/dashboard")
                         .forward(request, response);
                 break;
-                //-------------ACCOUNT----------------//
+            //-------------ACCOUNT----------------//
             case "private_accounts":
                 request.getRequestDispatcher("/account_list")
                         .forward(request, response);
@@ -97,12 +128,12 @@ public class MainController extends HttpServlet {
                 request.getRequestDispatcher("/account_update_view")
                         .forward(request, response);
                 break;
-                
+
             case "private_updateAccount":
                 request.getRequestDispatcher("/account_update")
                         .forward(request, response);
                 break;
-                
+
             case "private_toggleAccountStatus":
                 request.getRequestDispatcher("/account_toggle")
                         .forward(request, response);
@@ -123,38 +154,38 @@ public class MainController extends HttpServlet {
                         .forward(request, response);
                 break;
 
-                    //-------------CATEGORY--------------//
+            //-------------CATEGORY--------------//
             case "private_categories":
                 request.getRequestDispatcher("/category_list")
                         .forward(request, response);
                 break;
-                
+
             case "private_updateCategoryView":
                 request.getRequestDispatcher("/category_update_view")
                         .forward(request, response);
                 break;
-                
+
             case "private_updateCategory":
                 request.getRequestDispatcher("/category_update")
                         .forward(request, response);
                 break;
-                
+
             case "private_deleteCategory":
-            request.getRequestDispatcher("/category_delete")
-                    .forward(request, response);
-            break;
-                            
+                request.getRequestDispatcher("/category_delete")
+                        .forward(request, response);
+                break;
+
             case "private_addCategoryView":
                 request.getRequestDispatcher("/views/private_views/add_category.jsp")
                         .forward(request, response);
                 break;
-                
-             case "private_addCategory":
+
+            case "private_addCategory":
                 request.getRequestDispatcher("/category_add")
                         .forward(request, response);
                 break;
-            
-                //-------------------PRODUCT----------------------//
+
+            //-------------------PRODUCT----------------------//
             case "private_products":
                 request.getRequestDispatcher("/product_list")
                         .forward(request, response);
@@ -164,7 +195,7 @@ public class MainController extends HttpServlet {
                 request.getRequestDispatcher("/product_update_view")
                         .forward(request, response);
                 break;
-                
+
             case "private_updateProduct":
                 request.getRequestDispatcher("/product_update")
                         .forward(request, response);
@@ -185,8 +216,6 @@ public class MainController extends HttpServlet {
                         .forward(request, response);
                 break;
         }
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

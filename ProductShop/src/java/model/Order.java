@@ -1,10 +1,9 @@
-
 package model;
 
 import java.sql.Date;
 
 public class Order {
-    
+
     private int orderId;
     private Account account;
     private Date orderDate;
@@ -81,6 +80,5 @@ public class Order {
     public void setStatus(int status) {
         this.status = status;
     }
-    
-    
+
 }

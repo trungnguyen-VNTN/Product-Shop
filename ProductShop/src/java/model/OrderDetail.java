@@ -1,8 +1,7 @@
-
 package model;
 
 public class OrderDetail {
-    
+
     private int orderId;
     private Product productId;
     private int quantity;
@@ -59,6 +58,5 @@ public class OrderDetail {
     public void setDiscount(int discount) {
         this.discount = discount;
     }
-    
-    
+
 }

@@ -105,6 +105,7 @@ public class CartFilter implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
         try {
+            request.setCharacterEncoding("UTF-8");
 
             HttpServletRequest req = (HttpServletRequest) request;
             HttpSession session = req.getSession(false);

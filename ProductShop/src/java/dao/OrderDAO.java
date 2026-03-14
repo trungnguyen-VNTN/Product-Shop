@@ -1,30 +1,44 @@
 package dao;
 
-
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.ServletContext;
 import model.Account;
 import model.Order;
 import util.ConnectDB;
 
-public class OrderDAO implements Accessible<Order>{
+public class OrderDAO implements Accessible<Order> {
 
     private Connection con;
+    private ServletContext sc;
 
-    public OrderDAO() throws Exception{
-        con = new ConnectDB().getConnection();
+    public OrderDAO() throws ClassNotFoundException, SQLException {
+        ConnectDB db = new ConnectDB();
+        this.con = db.getConnection();
+    }
+
+    public OrderDAO(ServletContext sc) throws ClassNotFoundException, SQLException {
+        this.sc = sc;
+        this.con = getConnect(sc);
+    }
+
+    private Connection getConnect(ServletContext sc) throws ClassNotFoundException, SQLException {
+        return new ConnectDB(sc).getConnection();
     }
 
     @Override
     public int insertRec(Order obj) {
 
-        String sql =
-        "INSERT INTO orders(account, shippingAddress, phone, totalAmount, status) VALUES(?,?,?,?,?)";
+        String sql
+                = "INSERT INTO orders(account, shippingAddress, phone, totalAmount, status) VALUES(?,?,?,?,?)";
 
-        try(PreparedStatement ps = con.prepareStatement(sql)){
+        try ( PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, obj.getAccount().getAccount());
             ps.setString(2, obj.getShippingAddress());
@@ -34,7 +48,7 @@ public class OrderDAO implements Accessible<Order>{
 
             return ps.executeUpdate();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -44,10 +58,10 @@ public class OrderDAO implements Accessible<Order>{
     @Override
     public int updateRec(Order obj) {
 
-        String sql =
-        "UPDATE orders SET shippingAddress=?, phone=?, totalAmount=?, status=? WHERE orderId=?";
+        String sql
+                = "UPDATE orders SET shippingAddress=?, phone=?, totalAmount=?, status=? WHERE orderId=?";
 
-        try(PreparedStatement ps = con.prepareStatement(sql)){
+        try ( PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, obj.getShippingAddress());
             ps.setString(2, obj.getPhone());
@@ -57,7 +71,7 @@ public class OrderDAO implements Accessible<Order>{
 
             return ps.executeUpdate();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -69,13 +83,13 @@ public class OrderDAO implements Accessible<Order>{
 
         String sql = "DELETE FROM orders WHERE orderId=?";
 
-        try(PreparedStatement ps = con.prepareStatement(sql)){
+        try ( PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, obj.getOrderId());
 
             return ps.executeUpdate();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -85,22 +99,22 @@ public class OrderDAO implements Accessible<Order>{
     @Override
     public Order getObjectById(String id) {
 
-        String sql =
-        "SELECT o.*, a.* " +
-        "FROM orders o JOIN accounts a ON o.account = a.account " +
-        "WHERE o.orderId=?";
+        String sql
+                = "SELECT o.*, a.* "
+                + "FROM orders o JOIN accounts a ON o.account = a.account "
+                + "WHERE o.orderId=?";
 
-        try(PreparedStatement ps = con.prepareStatement(sql)){
+        try ( PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, Integer.parseInt(id));
 
             ResultSet rs = ps.executeQuery();
 
-            if(rs.next()){
+            if (rs.next()) {
                 return toOrder(rs);
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -112,28 +126,27 @@ public class OrderDAO implements Accessible<Order>{
 
         List<Order> list = new ArrayList<>();
 
-        String sql =
-        "SELECT o.*, a.* " +
-        "FROM orders o JOIN accounts a ON o.account = a.account";
+        String sql
+                = "SELECT o.*, a.* "
+                + "FROM orders o JOIN accounts a ON o.account = a.account";
 
-        try(PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()){
+        try ( PreparedStatement ps = con.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
 
-            while(rs.next()){
+            while (rs.next()) {
 
                 Order o = toOrder(rs);
                 list.add(o);
 
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return list;
     }
 
-    private Order toOrder(ResultSet rs) throws Exception{
+    private Order toOrder(ResultSet rs) throws Exception {
 
         Order o = new Order();
 
@@ -159,6 +172,61 @@ public class OrderDAO implements Accessible<Order>{
         o.setAccount(a);
 
         return o;
+    }
+
+    public int createOrder(String account, String address, String phone, int total) {
+
+        String sql = "INSERT INTO orders(account, shippingAddress, phone, totalAmount) VALUES (?, ?, ?, ?)";
+
+        try ( PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, account);
+            ps.setString(2, address);
+            ps.setString(3, phone);
+            ps.setInt(4, total);
+
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public List<Order> getOrdersByAccount(Account account) {
+
+        List<Order> list = new ArrayList<>();
+        String sql = "SELECT * FROM orders WHERE account=? ORDER BY orderDate DESC";
+        try ( PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, account.getAccount());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Order o = new Order();
+
+                o.setOrderId(rs.getInt("orderId"));
+                o.setAccount(account);
+                o.setOrderDate(new Date(rs.getTimestamp("orderDate").getTime()));
+                o.setShippingAddress(rs.getString("shippingAddress"));
+                o.setPhone(rs.getString("phone"));
+                o.setTotalAmount(rs.getInt("totalAmount"));
+                o.setStatus(rs.getInt("status"));
+
+                list.add(o);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
 }

@@ -1,8 +1,7 @@
-
 package error;
 
 public class AccountError {
-    
+
     private String accountError;
     private String passError;
     private String lastNameError;
@@ -70,7 +69,4 @@ public class AccountError {
         this.phoneError = phoneError;
     }
 
-
-    
-    
 }

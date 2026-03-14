@@ -1,8 +1,7 @@
-
 package error;
 
 public class CategoryError {
-    
+
     private String categoryNameError;
 
     public CategoryError() {
@@ -20,6 +19,4 @@ public class CategoryError {
         this.categoryNameError = categoryNameError;
     }
 
-
-    
 }

@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.cart;
+package controller.order;
 
-import dao.CartDetailDAO;
+import dao.OrderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -15,13 +16,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Account;
+import model.Order;
 
 /**
  *
  * @author PC
  */
-@WebServlet(name = "CartUpdateQuantityController", urlPatterns = {"/cart_quantity_update"})
-public class CartUpdateQuantityController extends HttpServlet {
+@WebServlet(name = "OrderViewController", urlPatterns = {"/order_view"})
+public class OrderViewController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,21 +38,17 @@ public class CartUpdateQuantityController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
-        response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        int cartId = Integer.parseInt(request.getParameter("cartId"));
-        String productId = request.getParameter("productId");
-        String type = request.getParameter("type");
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        Account acoount = (Account) session.getAttribute("user");
+        OrderDAO orderDAO = new OrderDAO(getServletContext());
+        List<Order> list = orderDAO.getOrdersByAccount(acoount);
 
-        CartDetailDAO dao = new CartDetailDAO(getServletContext());
+        request.setAttribute("orderList", list);
 
-        if (type.equals("plus")) {
-            dao.increaseQuantity(cartId, productId);
-        } else {
-            dao.decreaseQuantity(cartId, productId);
-        }
-
-        response.sendRedirect("main_controller?action=cart");
+        request.getRequestDispatcher("views/public_views/viewOrder.jsp")
+                .forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,9 +66,9 @@ public class CartUpdateQuantityController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CartUpdateQuantityController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(CartUpdateQuantityController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -86,9 +86,9 @@ public class CartUpdateQuantityController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CartUpdateQuantityController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(CartUpdateQuantityController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

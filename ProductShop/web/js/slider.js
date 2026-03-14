@@ -5,7 +5,7 @@ const dots = document.querySelectorAll(".dot");
 let index = 0;
 let interval;
 
-function updateSlider(){
+function updateSlider() {
 
     slides.style.transform = `translateX(-${index * 100}%)`;
 
@@ -14,23 +14,23 @@ function updateSlider(){
 
 }
 
-function startSlide(){
+function startSlide() {
     interval = setInterval(() => {
 
         index++;
 
-        if(index >= images.length){
+        if (index >= images.length) {
             index = 0;
         }
 
         updateSlider();
 
-    },4000);
+    }, 4000);
 }
 
-dots.forEach((dot,i)=>{
+dots.forEach((dot, i) => {
 
-    dot.addEventListener("click",()=>{
+    dot.addEventListener("click", () => {
 
         index = i;
         updateSlider();
@@ -41,11 +41,11 @@ dots.forEach((dot,i)=>{
 
 const slider = document.querySelector(".slider");
 
-slider.addEventListener("mouseenter",()=>{
+slider.addEventListener("mouseenter", () => {
     clearInterval(interval);
 });
 
-slider.addEventListener("mouseleave",()=>{
+slider.addEventListener("mouseleave", () => {
     startSlide();
 });
 

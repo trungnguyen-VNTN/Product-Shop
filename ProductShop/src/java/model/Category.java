@@ -1,8 +1,7 @@
-
 package model;
 
 public class Category {
-    
+
     private int typeId;
     private String categoryName;
     private String memo;
@@ -39,6 +38,5 @@ public class Category {
     public void setMemo(String memo) {
         this.memo = memo;
     }
-    
-    
+
 }

@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/cart.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
 
 <c:choose>
     <c:when test="${sessionScope.user == null || sessionScope.user.roleInSystem == 0}">
@@ -50,7 +51,7 @@
 
             <c:set var="total" value="0"/>
             <c:forEach var="c" items="${cartList}">
-                <c:set var="total" value="${total + (c.quantity * c.productId.price)}"/>
+                <c:set var="total" value="${total + (c.quantity * (c.productId.price - (c.productId.price * (c.productId.discount) / 100)))}"/>
                 <div class="cart-item">
 
                     <!-- PRODUCT -->
@@ -67,10 +68,42 @@
                     </div>
 
                     <!-- PRICE -->
-                    <div class="col-price price"
-                         data-price="${c.productId.price}">
-                        <fmt:formatNumber value="${c.productId.price}" type="number"/> đ
+                    <div class="col-price price">
+
+                        <c:choose>
+
+                            <c:when test="${c.productId.discount > 0}">
+
+                                <div class="price-box">
+
+                                    <span class="old-price">
+                                        <fmt:formatNumber value="${c.productId.price}" type="number"/> đ
+                                    </span>
+
+                                    <span class="new-price">
+                                        <fmt:formatNumber 
+                                            value="${c.productId.price - (c.productId.price * c.productId.discount / 100)}"
+                                            type="number"/> đ
+                                    </span>
+
+                                    <span class="discount-badge">
+                                        -${c.productId.discount}%
+                                    </span>
+
+                                </div>
+
+                            </c:when>
+
+                            <c:otherwise>
+
+                                <fmt:formatNumber value="${c.productId.price}" type="number"/> đ
+
+                            </c:otherwise>
+
+                        </c:choose>
+
                     </div>
+
 
                     <!-- QUANTITY -->
                     <div class="col-quantity">
@@ -100,7 +133,7 @@
                     <div class="col-total total">
 
                         <fmt:formatNumber 
-                            value="${c.quantity * c.productId.price}" 
+                            value="${c.quantity *  (c.productId.price - (c.productId.price * (c.productId.discount) / 100))}" 
                             type="number"/> đ   
 
                     </div>
@@ -110,7 +143,7 @@
 
                         <a class="delete-btn"
                            href="${pageContext.request.contextPath}/main_controller?action=deleteCart&productId=${c.productId.productId}&cartId=${c.cartId}">
-                            X
+                            <i class="fa-solid fa-trash-can"></i>
                         </a>
 
                     </div>

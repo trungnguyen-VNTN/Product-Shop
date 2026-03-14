@@ -1,10 +1,9 @@
-
 package model;
 
 import java.sql.Date;
 
 public class Account {
-    
+
     private String account;
     private String pass;
     private String lastName;
@@ -101,7 +100,5 @@ public class Account {
     public void setRoleInSystem(int roleInSystem) {
         this.roleInSystem = roleInSystem;
     }
-    
-    
-    
+
 }

@@ -183,7 +183,7 @@ html, body {
 .navbar a:hover{
     background:#ff3b2f;
     color:white;
-}   
+}
 
 .navbar a:hover::after{
     width:100%;

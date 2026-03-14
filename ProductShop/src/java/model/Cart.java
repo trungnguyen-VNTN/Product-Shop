@@ -1,8 +1,7 @@
-
 package model;
 
 public class Cart {
-    
+
     private int cartId;
     private Account account;
 
@@ -29,6 +28,5 @@ public class Cart {
     public void setAccount(Account account) {
         this.account = account;
     }
-    
-    
+
 }

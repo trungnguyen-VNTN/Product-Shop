@@ -1,9 +1,7 @@
-
 package error;
 
-
 public class ProductError {
-    
+
     private String productIdError;
     private String productNameError;
     private String productImageError;
@@ -110,6 +108,5 @@ public class ProductError {
     public void setDiscountError(String discountError) {
         this.discountError = discountError;
     }
-    
-    
+
 }

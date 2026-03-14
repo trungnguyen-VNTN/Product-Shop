@@ -23,6 +23,8 @@
         </div>
 
     </div>
+    
+    <a href="main_controller?action=viewOrder">Orders</a>
 
     <a href="#">Contact Us</a>
 

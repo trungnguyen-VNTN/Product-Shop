@@ -12,7 +12,7 @@
     <c:otherwise>
         <%@ include file="/views/private_views/private_header.jspf" %>
     </c:otherwise>
-    
+
 </c:choose>
 
 <div>

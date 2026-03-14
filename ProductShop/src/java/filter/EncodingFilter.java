@@ -5,13 +5,9 @@
 package filter;
 
 import java.io.IOException;
-import dao.AccountDAO;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -19,17 +15,13 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Account;
 
 /**
  *
  * @author PC
  */
-@WebFilter(filterName = "/auth_filter", urlPatterns = {"/main_controller"})
-public class AuthFilter implements Filter {
+@WebFilter(filterName = "EncodingFilter", urlPatterns = {"/*"})
+public class EncodingFilter implements Filter {
 
     private static final boolean debug = true;
 
@@ -38,13 +30,13 @@ public class AuthFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public AuthFilter() {
+    public EncodingFilter() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AuthFilter:DoBeforeProcessing");
+            log("EncodingFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -72,7 +64,7 @@ public class AuthFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AuthFilter:DoAfterProcessing");
+            log("EncodingFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -106,62 +98,11 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
+        System.out.println("=== EncodingFilter RUNNING ===");
         request.setCharacterEncoding("UTF-8");
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
+        response.setCharacterEncoding("UTF-8");
 
-        String action = req.getParameter("action");
-
-        if (action != null && action.contains("private")) {
-
-            try {
-                HttpSession session = req.getSession(false);
-
-                if (session == null || session.getAttribute("user") == null) {
-                    res.sendRedirect(req.getContextPath() + "/main_controller?action=login");
-                    return;
-                }
-                Account accInSession = (Account) session.getAttribute("user");
-                AccountDAO dao = new AccountDAO(req.getServletContext());
-                Account accInDB = dao.getObjectById(accInSession.getAccount());
-                System.out.println(accInDB.getAccount());
-                System.out.println(accInDB.isUsed());
-                if (!accInDB.isUsed()) {
-                    session.invalidate();
-                    res.sendRedirect(req.getContextPath() + "/main_controller?action=login");
-                    return;
-                }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AuthFilter.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(AuthFilter.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        Throwable problem = null;
-        try {
-            chain.doFilter(request, response);
-        } catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-            problem = t;
-            t.printStackTrace();
-        }
-
-        doAfterProcessing(request, response);
-
-        // If there was a problem, we want to rethrow it if it is
-        // a known type, otherwise log it.
-        if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
-            }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
-            }
-            sendProcessingError(problem, response);
-        }
+        chain.doFilter(request, response);
     }
 
     /**
@@ -193,7 +134,7 @@ public class AuthFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("AuthFilter:Initializing filter");
+                log("EncodingFilter:Initializing filter");
             }
         }
     }
@@ -204,9 +145,9 @@ public class AuthFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("AuthFilter()");
+            return ("EncodingFilter()");
         }
-        StringBuffer sb = new StringBuffer("AuthFilter(");
+        StringBuffer sb = new StringBuffer("EncodingFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

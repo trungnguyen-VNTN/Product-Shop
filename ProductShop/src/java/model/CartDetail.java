@@ -1,9 +1,7 @@
-
 package model;
 
-
 public class CartDetail {
-    
+
     private int cartId;
     private Product productId;
     private int quantity;
@@ -40,5 +38,5 @@ public class CartDetail {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
+
 }

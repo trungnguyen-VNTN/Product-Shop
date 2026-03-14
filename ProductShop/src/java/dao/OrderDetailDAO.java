@@ -3,30 +3,43 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.ServletContext;
 import model.Account;
+import model.CartDetail;
 import model.Category;
 import model.OrderDetail;
 import model.Product;
 import util.ConnectDB;
 
-
-public class OrderDetailDAO implements Accessible<OrderDetail>{
+public class OrderDetailDAO implements Accessible<OrderDetail> {
 
     private Connection con;
+    private ServletContext sc;
 
-    public OrderDetailDAO() throws Exception{
-        con = new ConnectDB().getConnection();
+    public OrderDetailDAO() throws ClassNotFoundException, SQLException {
+        ConnectDB db = new ConnectDB();
+        this.con = db.getConnection();
+    }
+
+    public OrderDetailDAO(ServletContext sc) throws ClassNotFoundException, SQLException {
+        this.sc = sc;
+        this.con = getConnect(sc);
+    }
+
+    private Connection getConnect(ServletContext sc) throws ClassNotFoundException, SQLException {
+        return new ConnectDB(sc).getConnection();
     }
 
     @Override
     public int insertRec(OrderDetail obj) {
 
-        String sql =
-        "INSERT INTO orderDetail(orderId, productId, quantity, price, discount) VALUES(?,?,?,?,?)";
+        String sql
+                = "INSERT INTO orderDetail(orderId, productId, quantity, price, discount) VALUES(?,?,?,?,?)";
 
-        try(PreparedStatement ps = con.prepareStatement(sql)){
+        try ( PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, obj.getOrderId());
             ps.setString(2, obj.getProductId().getProductId());
@@ -36,7 +49,7 @@ public class OrderDetailDAO implements Accessible<OrderDetail>{
 
             return ps.executeUpdate();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -46,10 +59,10 @@ public class OrderDetailDAO implements Accessible<OrderDetail>{
     @Override
     public int updateRec(OrderDetail obj) {
 
-        String sql =
-        "UPDATE orderDetail SET quantity=?, price=?, discount=? WHERE orderId=? AND productId=?";
+        String sql
+                = "UPDATE orderDetail SET quantity=?, price=?, discount=? WHERE orderId=? AND productId=?";
 
-        try(PreparedStatement ps = con.prepareStatement(sql)){
+        try ( PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, obj.getQuantity());
             ps.setInt(2, obj.getPrice());
@@ -59,7 +72,7 @@ public class OrderDetailDAO implements Accessible<OrderDetail>{
 
             return ps.executeUpdate();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -69,17 +82,17 @@ public class OrderDetailDAO implements Accessible<OrderDetail>{
     @Override
     public int deleteRec(OrderDetail obj) {
 
-        String sql =
-        "DELETE FROM orderDetail WHERE orderId=? AND productId=?";
+        String sql
+                = "DELETE FROM orderDetail WHERE orderId=? AND productId=?";
 
-        try(PreparedStatement ps = con.prepareStatement(sql)){
+        try ( PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, obj.getOrderId());
             ps.setString(2, obj.getProductId().getProductId());
 
             return ps.executeUpdate();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -89,28 +102,28 @@ public class OrderDetailDAO implements Accessible<OrderDetail>{
     @Override
     public OrderDetail getObjectById(String id) {
 
-        String sql =
-        "SELECT od.*, " +
-        "p.productId, p.productName, p.productImage, p.brief, p.postedDate, p.unit, p.price AS productPrice, p.discount AS productDiscount, " +
-        "c.typeId, c.categoryName, " +
-        "a.account, a.pass, a.lastName, a.firstName, a.birthday, a.gender, a.phone AS accountPhone, a.isUse, a.roleInSystem " +
-        "FROM orderDetail od " +
-        "JOIN products p ON od.productId = p.productId " +
-        "JOIN categories c ON p.typeId = c.typeId " +
-        "JOIN accounts a ON p.account = a.account " +
-        "WHERE od.productId = ?";
+        String sql
+                = "SELECT od.*, "
+                + "p.productId, p.productName, p.productImage, p.brief, p.postedDate, p.unit, p.price AS productPrice, p.discount AS productDiscount, "
+                + "c.typeId, c.categoryName, "
+                + "a.account, a.pass, a.lastName, a.firstName, a.birthday, a.gender, a.phone AS accountPhone, a.isUse, a.roleInSystem "
+                + "FROM orderDetail od "
+                + "JOIN products p ON od.productId = p.productId "
+                + "JOIN categories c ON p.typeId = c.typeId "
+                + "JOIN accounts a ON p.account = a.account "
+                + "WHERE od.productId = ?";
 
-        try(PreparedStatement ps = con.prepareStatement(sql)){
+        try ( PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, id);
 
             ResultSet rs = ps.executeQuery();
 
-            if(rs.next()){
+            if (rs.next()) {
                 return toOrderDetail(rs);
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -122,34 +135,33 @@ public class OrderDetailDAO implements Accessible<OrderDetail>{
 
         List<OrderDetail> list = new ArrayList<>();
 
-        String sql =
-        "SELECT od.*, " +
-        "p.productId, p.productName, p.productImage, p.brief, p.postedDate, p.unit, p.price AS productPrice, p.discount AS productDiscount, " +
-        "c.typeId, c.categoryName, " +
-        "a.account, a.pass, a.lastName, a.firstName, a.birthday, a.gender, a.phone AS accountPhone, a.isUse, a.roleInSystem " +
-        "FROM orderDetail od " +
-        "JOIN products p ON od.productId = p.productId " +
-        "JOIN categories c ON p.typeId = c.typeId " +
-        "JOIN accounts a ON p.account = a.account";
+        String sql
+                = "SELECT od.*, "
+                + "p.productId, p.productName, p.productImage, p.brief, p.postedDate, p.unit, p.price AS productPrice, p.discount AS productDiscount, "
+                + "c.typeId, c.categoryName, "
+                + "a.account, a.pass, a.lastName, a.firstName, a.birthday, a.gender, a.phone AS accountPhone, a.isUse, a.roleInSystem "
+                + "FROM orderDetail od "
+                + "JOIN products p ON od.productId = p.productId "
+                + "JOIN categories c ON p.typeId = c.typeId "
+                + "JOIN accounts a ON p.account = a.account";
 
-        try(PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()){
+        try ( PreparedStatement ps = con.prepareStatement(sql);  ResultSet rs = ps.executeQuery()) {
 
-            while(rs.next()){
+            while (rs.next()) {
 
                 OrderDetail od = toOrderDetail(rs);
                 list.add(od);
 
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return list;
     }
 
-    private OrderDetail toOrderDetail(ResultSet rs) throws Exception{
+    private OrderDetail toOrderDetail(ResultSet rs) throws Exception {
 
         OrderDetail od = new OrderDetail();
 
@@ -191,6 +203,74 @@ public class OrderDetailDAO implements Accessible<OrderDetail>{
         od.setProductId(p);
 
         return od;
+    }
+
+    public void createOrderDetail(int orderId, List<CartDetail> list) {
+
+        String sql = "INSERT INTO orderDetail(orderId, productId, quantity, price, discount) VALUES (?, ?, ?, ?, ?)";
+
+        try ( PreparedStatement ps = con.prepareStatement(sql)) {
+
+            for (CartDetail c : list) {
+
+                ps.setInt(1, orderId);
+                ps.setString(2, c.getProductId().getProductId());
+                ps.setInt(3, c.getQuantity());
+                ps.setInt(4, c.getProductId().getPrice());
+                ps.setInt(5, c.getProductId().getDiscount());
+
+                ps.addBatch();
+            }
+
+            ps.executeBatch();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<OrderDetail> getByOrderId(int orderId) {
+
+        List<OrderDetail> list = new ArrayList<>();
+
+        String sql = "SELECT od.orderId, od.quantity, "
+                + "p.productId, p.productName, p.productImage, "
+                + "p.price, p.discount "
+                + "FROM orderDetail od "
+                + "JOIN products p ON od.productId = p.productId "
+                + "WHERE od.orderId = ?";
+
+        try ( PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, orderId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                OrderDetail od = new OrderDetail();
+
+                od.setOrderId(rs.getInt("orderId"));
+                od.setQuantity(rs.getInt("quantity"));
+
+                Product p = new Product();
+
+                p.setProductId(rs.getString("productId"));
+                p.setProductName(rs.getString("productName"));
+                p.setProductImage(rs.getString("productImage"));
+                p.setPrice(rs.getInt("price"));
+                p.setDiscount(rs.getInt("discount"));
+
+                od.setProductId(p);
+
+                list.add(od);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
 }

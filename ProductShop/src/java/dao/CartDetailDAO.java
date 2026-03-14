@@ -234,4 +234,21 @@ public class CartDetailDAO {
             e.printStackTrace();
         }
     }
+
+    public int clearCartDetail(int cartId) {
+
+        String sql = "DELETE FROM cartDetail WHERE cartId=?";
+
+        try ( PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, cartId);
+
+            return ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 }

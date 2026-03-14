@@ -34,6 +34,7 @@ public class CartDeleteController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         int cartId = Integer.parseInt(request.getParameter("cartId"));
         String productId = request.getParameter("productId");
         CartDetailDAO dao = new CartDetailDAO(getServletContext());

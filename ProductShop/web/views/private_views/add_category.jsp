@@ -1,11 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Add Category</title>
+        <title>Category</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/add_category.css">
     </head>
 
@@ -22,9 +21,10 @@
 
             <div class="card">
 
-                <form action="main_controller?action=private_addCategory" method="post" class="form-layout">
+                <form action="main_controller?action=private_addCategory"
+                      method="post"
+                      accept-charset="UTF-8">
 
-                    <!-- Category Name -->
                     <div class="form-group">
                         <label>Category Name</label>
                         <input type="text" name="categoryName"
@@ -40,7 +40,7 @@
                                placeholder="Enter memo">
                         <span class="error">${category_error.memoError}</span>
                     </div>
-                    <!-- Buttons -->
+
                     <div class="form-footer">
                         <button type="submit" class="btn btn-success">Create Category</button>
                         <a href="main_controller?action=categories" class="btn btn-secondary">Cancel</a>
