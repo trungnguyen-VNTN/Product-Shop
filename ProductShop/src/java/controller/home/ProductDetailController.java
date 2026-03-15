@@ -2,7 +2,6 @@ package controller.home;
 
 import dao.ProductDAO;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -28,12 +27,11 @@ public class ProductDetailController extends HttpServlet {
             response.sendRedirect("product_list_home");
             return;
         }
+        int price = product.getPrice();
 
         /* ---------------- COOKIE: VIEWED PRODUCTS ---------------- */
-
         Cookie[] cookies = request.getCookies();
         String viewed = "";
-
         if (cookies != null) {
             for (Cookie c : cookies) {
                 if ("viewedProducts".equals(c.getName())) {
@@ -42,38 +40,37 @@ public class ProductDetailController extends HttpServlet {
             }
         }
 
-        /* thêm product mới vào cookie */
-        String newValue = product.getProductId() + "-" + product.getPrice() + "_";
-        viewed = viewed + newValue;
+        String newProduct = productId + "-" + price;
 
-        /* giới hạn tối đa 10 sản phẩm */
+        StringBuilder updated = new StringBuilder();
+
+        updated.append(newProduct);
+
         String[] arr = viewed.split("_");
 
-        if (arr.length > 10) {
+        for (String s : arr) {
 
-            StringBuilder temp = new StringBuilder();
+            if (!s.startsWith(productId + "-") && !s.isEmpty()) {
+                updated.append("_").append(s);
+            }
+        }
+        String[] finalArr = updated.toString().split("_");
+        String result = "";
+        for (int i = 0; i < finalArr.length && i < 20; i++) {
 
-            for (int i = arr.length - 10; i < arr.length; i++) {
-
-                if (!arr[i].isEmpty()) {
-                    temp.append(arr[i]).append("_");
-                }
+            if (i > 0) {
+                result += "_";
             }
 
-            viewed = temp.toString();
+            result += finalArr[i];
         }
 
-        /* encode cookie để tránh lỗi ký tự */
-        String encodedViewed = URLEncoder.encode(viewed, "UTF-8");
-
-        Cookie cookie = new Cookie("viewedProducts", encodedViewed);
-        cookie.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
-        cookie.setPath("/");
-
+        Cookie cookie = new Cookie("viewedProducts", result);
+        cookie.setMaxAge(7 * 24 * 60 * 60);
+        cookie.setPath("/"); 
         response.addCookie(cookie);
 
         /* ---------------- SEND DATA TO JSP ---------------- */
-
         request.setAttribute("product", product);
 
         request.getRequestDispatcher("views/public_views/detail.jsp")

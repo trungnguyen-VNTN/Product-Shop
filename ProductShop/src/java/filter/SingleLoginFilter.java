@@ -5,13 +5,11 @@
 package filter;
 
 import java.io.IOException;
-import dao.AccountDAO;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -28,8 +26,11 @@ import model.Account;
  *
  * @author PC
  */
-@WebFilter(filterName = "/auth_filter", urlPatterns = {"/main_controller"})
-public class AuthFilter implements Filter {
+@WebFilter(filterName = "SingleLoginFilter", urlPatterns = {"/*"})
+
+public class SingleLoginFilter implements Filter {
+
+    public static Map<String, HttpSession> loggedUsers = new ConcurrentHashMap<>();
 
     private static final boolean debug = true;
 
@@ -38,13 +39,13 @@ public class AuthFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public AuthFilter() {
+    public SingleLoginFilter() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AuthFilter:DoBeforeProcessing");
+            log("SingleLoginFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -72,7 +73,7 @@ public class AuthFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AuthFilter:DoAfterProcessing");
+            log("SingleLoginFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -110,64 +111,35 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        String action = req.getParameter("action");
+        HttpSession session = req.getSession(false);
 
-        if (action != null && action.contains("private")) {
+        try {
+            if (session != null) {
+                Account acc = (Account) session.getAttribute("user");
+                if (acc != null) {
+                    String username = acc.getAccount();
 
-            try {
-                HttpSession session = req.getSession(false);
+                    if (username != null) {
 
-                if (session == null || session.getAttribute("user") == null) {
-                    res.sendRedirect(req.getContextPath() + "/main_controller?action=login");
-                    return;
-                }
-                Account accInSession = (Account) session.getAttribute("user");
-                if (accInSession != null) {
-                    if (accInSession.getRoleInSystem() == 0) {
-                        res.sendRedirect(req.getContextPath() + "/main_controller?action=login");
-                        return;
+                        HttpSession existingSession = loggedUsers.get(username);
+
+                        if (existingSession == null) {
+
+                            loggedUsers.put(username, session);
+
+                        } else if (existingSession != session) {
+                            existingSession.invalidate();
+                            loggedUsers.put(username, session);
+                        }
                     }
                 }
-                AccountDAO dao = new AccountDAO(req.getServletContext());
-                Account accInDB = dao.getObjectById(accInSession.getAccount());
-                System.out.println(accInDB.getAccount());
-                System.out.println(accInDB.isUsed());
-                if (!accInDB.isUsed()) {
-                    session.invalidate();
-                    res.sendRedirect(req.getContextPath() + "/main_controller?action=login");
-                    return;
-                }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AuthFilter.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(AuthFilter.class.getName()).log(Level.SEVERE, null, ex);
+
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        Throwable problem = null;
-        try {
-            chain.doFilter(request, response);
-        } catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-            problem = t;
-            t.printStackTrace();
-        }
-
-        doAfterProcessing(request, response);
-
-        // If there was a problem, we want to rethrow it if it is
-        // a known type, otherwise log it.
-        if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
-            }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
-            }
-            sendProcessingError(problem, response);
-        }
+        chain.doFilter(request, response);
     }
 
     /**
@@ -199,7 +171,7 @@ public class AuthFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("AuthFilter:Initializing filter");
+                log("SingleLoginFilter:Initializing filter");
             }
         }
     }
@@ -210,9 +182,9 @@ public class AuthFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("AuthFilter()");
+            return ("SingleLoginFilter()");
         }
-        StringBuffer sb = new StringBuffer("AuthFilter(");
+        StringBuffer sb = new StringBuffer("SingleLoginFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

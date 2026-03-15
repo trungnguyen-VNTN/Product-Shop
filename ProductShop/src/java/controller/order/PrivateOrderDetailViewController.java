@@ -4,7 +4,7 @@
  */
 package controller.order;
 
-import dao.OrderDAO;
+import dao.OrderDetailDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,16 +15,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Account;
-import model.Order;
+import model.OrderDetail;
 
 /**
  *
  * @author PC
  */
-@WebServlet(name = "OrderViewController", urlPatterns = {"/order_view"})
-public class OrderViewController extends HttpServlet {
+@WebServlet(name = "PrivateOrderDetailViewController", urlPatterns = {"/private_order_detail_view"})
+public class PrivateOrderDetailViewController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,14 +37,12 @@ public class OrderViewController extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        Account acoount = (Account) session.getAttribute("user");
-        OrderDAO orderDAO = new OrderDAO(getServletContext());
-        List<Order> list = orderDAO.getOrdersByAccount(acoount);
-
-        request.setAttribute("orderList", list);
-
-        request.getRequestDispatcher("views/public_views/view_order.jsp")
+        int orderId = Integer.parseInt(request.getParameter("id"));
+        OrderDetailDAO dao = new OrderDetailDAO(getServletContext());
+        List<OrderDetail> list = dao.getByOrderId(orderId);
+        request.setAttribute("detailList", list);
+        request.setAttribute("orderId", orderId);
+        request.getRequestDispatcher("views/private_views/private_order_detail_view.jsp")
                 .forward(request, response);
     }
 
@@ -65,9 +61,9 @@ public class OrderViewController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrivateOrderDetailViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrivateOrderDetailViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -85,9 +81,9 @@ public class OrderViewController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrivateOrderDetailViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(OrderViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrivateOrderDetailViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

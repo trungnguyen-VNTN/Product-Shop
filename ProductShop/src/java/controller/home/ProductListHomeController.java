@@ -55,7 +55,6 @@ public class ProductListHomeController extends HttpServlet {
         }
 
         /* ---------------- RECENTLY VIEWED ---------------- */
-        List<String> productIds = new ArrayList<>();
         double sum = 0;
         int count = 0;
 
@@ -71,7 +70,6 @@ public class ProductListHomeController extends HttpServlet {
 
                     if (parts.length == 2) {
 
-                        String productId = parts[0];
 
                         try {
 
@@ -81,29 +79,19 @@ public class ProductListHomeController extends HttpServlet {
 
                                 double price = Double.parseDouble(priceStr);
 
-                                productIds.add(productId);
 
                                 sum += price;
                                 count++;
                             }
 
                         } catch (Exception e) {
-                            
+                            e.printStackTrace();
                         }
                     }
                 }
             }
         }
 
-        /* ---------------- RECENTLY VIEWED PRODUCTS ---------------- */
-//        if (!productIds.isEmpty()) {
-//
-//            List<Product> viewedProducts = productDAO.getProductsByIds(productIds);
-//            request.setAttribute("viewedProducts", viewedProducts);
-//
-//        } else {
-//            request.setAttribute("viewedProducts", new ArrayList<>());
-//        }
 
         /* ---------------- RECOMMENDED PRODUCTS ---------------- */
         List<Product> recommendedProducts = new ArrayList<>();
@@ -144,8 +132,8 @@ public class ProductListHomeController extends HttpServlet {
             }
         }
         if (recommendedProducts.size() > 4) {
-    recommendedProducts = recommendedProducts.subList(0, 4);
-}
+            recommendedProducts = recommendedProducts.subList(0, 4);
+        }
         request.setAttribute("recommendedProducts", recommendedProducts);
 
         request.getRequestDispatcher("/index.jsp").forward(request, response);

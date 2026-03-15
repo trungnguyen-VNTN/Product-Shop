@@ -55,8 +55,13 @@
             <c:choose>
 
                 <c:when test="${sessionScope.user != null}">
-                    <a href="${pageContext.request.contextPath}/main_controller?action=profile">
-                        <i class="fa-solid fa-user"></i> Acc
+                    <a class="account" href="${pageContext.request.contextPath}/main_controller?action=profile">
+                        <i class="fa-solid fa-user"></i> Profile
+                    </a>
+                        
+                    <a class="login-btn"
+                       href="${pageContext.request.contextPath}/main_controller?action=logout">
+                        <i class="fa-solid fa-user"></i> Logout
                     </a>
                 </c:when>
 

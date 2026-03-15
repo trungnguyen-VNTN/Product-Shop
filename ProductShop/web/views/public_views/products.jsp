@@ -202,7 +202,6 @@
 
         </div>
 
-        <script src="${pageContext.request.contextPath}/js/slider.js"></script>
 
     </body>
 </html>

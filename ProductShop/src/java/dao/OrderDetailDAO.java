@@ -273,4 +273,23 @@ public class OrderDetailDAO implements Accessible<OrderDetail> {
         return list;
     }
 
+    public int countProductsSold() throws Exception {
+
+        int total = 0;
+
+        String sql = "SELECT SUM(quantity) FROM OrderDetail";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+
+            total = rs.getInt(1);
+
+        }
+
+        return total;
+
+    }
 }

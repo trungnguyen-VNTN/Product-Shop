@@ -15,14 +15,6 @@
         </div>
     </div>
 
-    <div class="header-center">
-        <a href="main_controller?action=home" class="nav-item">Home</a>
-        <a href="main_controller?action=private" class="nav-item">Dashboard</a>
-        <a href="main_controller?action=private_accounts" class="nav-item">Accounts</a>
-        <a href="main_controller?action=private_products" class="nav-item">Products</a>
-        <a href="main_controller?action=private_categories" class="nav-item">Categories</a>
-    </div>
-
     <div class="header-right">
         <a href="main_controller?action=logout" class="logout-btn">Logout</a>
     </div>

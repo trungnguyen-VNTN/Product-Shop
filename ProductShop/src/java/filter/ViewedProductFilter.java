@@ -4,14 +4,13 @@
  */
 package filter;
 
+import dao.ProductDAO;
 import java.io.IOException;
-import dao.AccountDAO;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -19,17 +18,17 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Account;
+import model.Product;
 
 /**
  *
  * @author PC
  */
-@WebFilter(filterName = "/auth_filter", urlPatterns = {"/main_controller"})
-public class AuthFilter implements Filter {
+@WebFilter(filterName = "ViewedProductFilter", urlPatterns = {"/*"})
+public class ViewedProductFilter implements Filter {
 
     private static final boolean debug = true;
 
@@ -38,13 +37,13 @@ public class AuthFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public AuthFilter() {
+    public ViewedProductFilter() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AuthFilter:DoBeforeProcessing");
+            log("ViewedProductFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -72,7 +71,7 @@ public class AuthFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AuthFilter:DoAfterProcessing");
+            log("ViewedProductFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -109,65 +108,66 @@ public class AuthFilter implements Filter {
         request.setCharacterEncoding("UTF-8");
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+        try {
 
-        String action = req.getParameter("action");
+            ProductDAO productDAO = new ProductDAO(request.getServletContext());
 
-        if (action != null && action.contains("private")) {
+            Cookie[] cookies = req.getCookies();
+            String viewed = "";
 
-            try {
-                HttpSession session = req.getSession(false);
+            if (cookies != null) {
 
-                if (session == null || session.getAttribute("user") == null) {
-                    res.sendRedirect(req.getContextPath() + "/main_controller?action=login");
-                    return;
-                }
-                Account accInSession = (Account) session.getAttribute("user");
-                if (accInSession != null) {
-                    if (accInSession.getRoleInSystem() == 0) {
-                        res.sendRedirect(req.getContextPath() + "/main_controller?action=login");
-                        return;
+                for (Cookie c : cookies) {
+
+                    if ("viewedProducts".equals(c.getName())) {
+
+                        viewed = c.getValue();
+
                     }
                 }
-                AccountDAO dao = new AccountDAO(req.getServletContext());
-                Account accInDB = dao.getObjectById(accInSession.getAccount());
-                System.out.println(accInDB.getAccount());
-                System.out.println(accInDB.isUsed());
-                if (!accInDB.isUsed()) {
-                    session.invalidate();
-                    res.sendRedirect(req.getContextPath() + "/main_controller?action=login");
-                    return;
+            }
+
+            List<String> productIds = new ArrayList<>();
+
+            if (viewed != null && !viewed.isEmpty()) {
+
+                String[] arr = viewed.split("_");
+
+                for (String s : arr) {
+
+                    if (!s.isEmpty()) {
+
+                        String[] parts = s.split("-");
+
+                        if (parts.length == 2) {
+
+                            String id = parts[0];
+
+                            if (!productIds.contains(id)) {
+                                productIds.add(id);
+                            }
+                        }
+                    }
                 }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AuthFilter.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(AuthFilter.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            List<Product> viewedProducts = new ArrayList<>();
+
+            if (!productIds.isEmpty()) {
+
+                viewedProducts = productDAO.getProductsByIds(productIds);
+
+            }
+
+            req.setAttribute("viewedProducts", viewedProducts);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
         }
 
-        Throwable problem = null;
-        try {
-            chain.doFilter(request, response);
-        } catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
-            // we still want to execute our after processing, and then
-            // rethrow the problem after that.
-            problem = t;
-            t.printStackTrace();
-        }
-
-        doAfterProcessing(request, response);
-
-        // If there was a problem, we want to rethrow it if it is
-        // a known type, otherwise log it.
-        if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
-            }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
-            }
-            sendProcessingError(problem, response);
-        }
+        chain.doFilter(request, response);
     }
 
     /**
@@ -199,7 +199,7 @@ public class AuthFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("AuthFilter:Initializing filter");
+                log("ViewedProductFilter:Initializing filter");
             }
         }
     }
@@ -210,9 +210,9 @@ public class AuthFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("AuthFilter()");
+            return ("ViewedProductFilter()");
         }
-        StringBuffer sb = new StringBuffer("AuthFilter(");
+        StringBuffer sb = new StringBuffer("ViewedProductFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

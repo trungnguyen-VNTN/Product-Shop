@@ -13,6 +13,8 @@
     <body>
 
         <%@ include file="private_header.jspf" %>
+        <%@ include file="sidebar.jspf" %>
+
 
         <div class="page-wrapper">
 

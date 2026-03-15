@@ -678,4 +678,163 @@ public class ProductDAO implements Accessible<Product> {
 
         return list;
     }
+
+    public List<Product> searchProduct(String keyword) {
+
+        String sqlCommand
+                = "SELECT p.*, "
+                + "a.account AS a_account, "
+                + "a.pass, "
+                + "a.firstName, "
+                + "a.lastName, "
+                + "a.birthday, "
+                + "a.gender, "
+                + "a.phone, "
+                + "a.roleInSystem, "
+                + "a.isUse, "
+                + "c.typeId AS c_typeId, "
+                + "c.categoryName, "
+                + "c.memo "
+                + "FROM Products p "
+                + "JOIN Categories c ON p.typeId = c.typeId "
+                + "JOIN Accounts a ON p.account = a.account "
+                + "WHERE p.productName LIKE ?";
+
+        List<Product> list = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            ps = con.prepareStatement(sqlCommand);
+
+            ps.setString(1, "%" + keyword + "%");
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Product pro = toProduct(rs);
+
+                list.add(pro);
+
+            }
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+            }
+
+        }
+
+        return list;
+
+    }
+
+    public List<Product> getProductsByIds(List<String> productIds) {
+
+        List<Product> list = new ArrayList<>();
+
+        if (productIds == null || productIds.isEmpty()) {
+            return list;
+        }
+
+        StringBuilder sqlCommand = new StringBuilder(
+                "SELECT p.*, "
+                + "a.account AS a_account, "
+                + "a.pass, "
+                + "a.firstName, "
+                + "a.lastName, "
+                + "a.birthday, "
+                + "a.gender, "
+                + "a.phone, "
+                + "a.roleInSystem, "
+                + "a.isUse, "
+                + "c.typeId AS c_typeId, "
+                + "c.categoryName, "
+                + "c.memo "
+                + "FROM Products p "
+                + "JOIN Categories c ON p.typeId = c.typeId "
+                + "JOIN Accounts a ON p.account = a.account "
+                + "WHERE p.productId IN ("
+        );
+
+        for (int i = 0; i < productIds.size(); i++) {
+            sqlCommand.append("?");
+            if (i < productIds.size() - 1) {
+                sqlCommand.append(",");
+            }
+        }
+
+        sqlCommand.append(")");
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            ps = con.prepareStatement(sqlCommand.toString());
+
+            for (int i = 0; i < productIds.size(); i++) {
+                ps.setString(i + 1, productIds.get(i));
+            }
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Product pro = toProduct(rs);
+                list.add(pro);
+
+            }
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+            }
+
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+            }
+        }
+
+        List<Product> sortedList = new ArrayList<>();
+
+        for (String id : productIds) {
+            for (Product p : list) {
+                if (p.getProductId().equals(id)) {
+                    sortedList.add(p);
+                    break;
+                }
+            }
+        }
+
+        return sortedList;
+    }
 }

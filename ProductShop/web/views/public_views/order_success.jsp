@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/orderSuccess.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/order_success.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
 
 <c:choose>

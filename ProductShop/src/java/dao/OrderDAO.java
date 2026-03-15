@@ -229,4 +229,44 @@ public class OrderDAO implements Accessible<Order> {
         return list;
     }
 
+    public int getTotalSales() throws Exception {
+
+        int total = 0;
+
+        String sql = "SELECT SUM(totalAmount) FROM Orders";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+
+            total = rs.getInt(1);
+
+        }
+
+        return total;
+
+    }
+
+    public int countOrders() throws Exception {
+
+        int total = 0;
+
+        String sql = "SELECT COUNT(*) FROM Orders";
+
+        PreparedStatement ps = con.prepareStatement(sql);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+
+            total = rs.getInt(1);
+
+        }
+
+        return total;
+
+    }
+
 }

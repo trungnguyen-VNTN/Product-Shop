@@ -62,3 +62,22 @@
     background:#fafafa;
     border:1px dashed #ddd;
 }
+
+/* ORDER ID */
+
+.orders-table td a{
+    text-decoration:none;
+    color:#6c2bd9;
+    font-weight:600;
+    padding:6px 10px;
+    border-radius:6px;
+    background:#f4f1ff;
+    transition:0.2s;
+}
+
+/* hover */
+
+.orders-table td a:hover{
+    background:#6c2bd9;
+    color:white;
+}

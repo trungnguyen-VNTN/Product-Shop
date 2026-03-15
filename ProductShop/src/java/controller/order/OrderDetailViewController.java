@@ -40,12 +40,9 @@ public class OrderDetailViewController extends HttpServlet {
         int orderId = Integer.parseInt(request.getParameter("id"));
         OrderDetailDAO dao = new OrderDetailDAO(getServletContext());
         List<OrderDetail> list = dao.getByOrderId(orderId);
-        System.out.println("hahahah");
-
         request.setAttribute("detailList", list);
         request.setAttribute("orderId", orderId);
-
-        request.getRequestDispatcher("views/public_views/viewOrderDetail.jsp")
+        request.getRequestDispatcher("views/public_views/view_order_detail.jsp")
                 .forward(request, response);
     }
 

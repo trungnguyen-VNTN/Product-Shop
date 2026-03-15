@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/viewOrder.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/view_order.css">
 
 <c:choose>
     <c:when test="${sessionScope.user == null || sessionScope.user.roleInSystem == 0}">

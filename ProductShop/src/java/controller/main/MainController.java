@@ -31,9 +31,9 @@ public class MainController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-   // ===== DEBUG ENCODING =====
-    request.setCharacterEncoding("UTF-8");
-    String action = request.getParameter("action");
+        // ===== DEBUG ENCODING =====
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
 
         if (action == null) {
             action = "home";
@@ -46,36 +46,55 @@ public class MainController extends HttpServlet {
                         .forward(request, response);
                 break;
 
-                
             case "login":
                 request.getRequestDispatcher("views/public_views/login.jsp")
                         .forward(request, response);
                 break;
 
-                
             case "logout":
                 request.getRequestDispatcher("/logout")
                         .forward(request, response);
                 break;
 
-                
             case "detail":
                 request.getRequestDispatcher("/product_detail")
                         .forward(request, response);
                 break;
-                
-                
+
+            case "search":
+                request.getRequestDispatcher("/product_search")
+                        .forward(request, response);
+                break;
+
+            case "viewedProducts":
+                request.getRequestDispatcher("views/public_views/viewed_products.jsp")
+                        .forward(request, response);
+                break;
+
             case "products":
                 request.getRequestDispatcher("/all_product_list_home")
                         .forward(request, response);
                 break;
-                
-                
+
+            case "profile":
+                request.getRequestDispatcher("views/public_views/profile.jsp")
+                        .forward(request, response);
+                break;
+
             case "productFilter":
                 request.getRequestDispatcher("/product_filter")
                         .forward(request, response);
                 break;
-                
+
+            case "viewContactUs":
+                request.getRequestDispatcher("views/public_views/contact.jsp")
+                        .forward(request, response);
+                break;
+
+            case "viewAboutUs":
+                request.getRequestDispatcher("views/public_views/about.jsp")
+                        .forward(request, response);
+                break;
             //-------------------CART--------------------------//
             case "addToCart":
                 request.getRequestDispatcher("/cart_add")
@@ -109,7 +128,7 @@ public class MainController extends HttpServlet {
                 break;
 
             case "orderSuccess":
-                request.getRequestDispatcher("views/public_views/orderSuccess.jsp")
+                request.getRequestDispatcher("views/public_views/order_success.jsp")
                         .forward(request, response);
                 break;
 
@@ -117,17 +136,28 @@ public class MainController extends HttpServlet {
                 request.getRequestDispatcher("/order_view")
                         .forward(request, response);
                 break;
-                
-                
+
             case "viewOrderDetail":
                 request.getRequestDispatcher("/order_detail_view")
                         .forward(request, response);
                 break;
             //-------------------PRIVATE--------------------------//
+
             case "private":
                 request.getRequestDispatcher("/dashboard")
                         .forward(request, response);
                 break;
+
+            case "invoice":
+                request.getRequestDispatcher("/invoice")
+                        .forward(request, response);
+                break;
+
+            case "private_viewOrderDetail":
+                request.getRequestDispatcher("/private_order_detail_view")
+                        .forward(request, response);
+                break;
+
             //-------------ACCOUNT----------------//
             case "private_accounts":
                 request.getRequestDispatcher("/account_list")

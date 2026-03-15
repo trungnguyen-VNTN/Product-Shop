@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/header.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/navbar.css">
 
 <div class="navbar">
 
@@ -16,11 +16,62 @@
         Products
     </a>
 
+    <!-- VIEWED PRODUCTS -->
+    <div class="viewed-menu">
+
+        <a href="main_controller?action=viewedProducts">Viewed</a>
+
+        <div class="viewed-dropdown">
+
+            <c:choose>
+
+                <c:when test="${not empty viewedProducts}">
+
+                    <c:forEach var="p" items="${viewedProducts}" begin="0" end="3">
+
+                        <a class="viewed-item"
+                           href="${pageContext.request.contextPath}/main_controller?action=detail&id=${p.productId}">
+
+                            <img src="${pageContext.request.contextPath}/${p.productImage}"width="40">
+
+                            <div class="viewed-info">
+
+                                <div class="viewed-name">
+                                    ${p.productName}
+                                </div>
+
+                                <div class="viewed-price">
+                                    <fmt:formatNumber value="${p.price}" type="number"/> đ
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    </c:forEach>
+                    
+                    <a class="view-all" href="main_controller?action=viewedProducts">View All</a>
+
+                </c:when>
+
+                <c:otherwise>
+
+                    <div class="viewed-empty">
+                        No viewed products
+                    </div>
+
+                </c:otherwise>
+
+            </c:choose>
+
+        </div>
+
+    </div>
 
     <a href="main_controller?action=viewOrder">Orders</a>
 
-    <a href="#">Contact Us</a>
+    <a href="main_controller?action=viewContactUs">Contact Us</a>
 
-    <a href="#">About Us</a>
+    <a href="main_controller?action=viewAboutUs">About Us</a>
 
 </div>
