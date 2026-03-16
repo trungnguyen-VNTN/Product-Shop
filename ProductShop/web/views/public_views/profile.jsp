@@ -103,7 +103,7 @@
 
                     <div class="profile-actions">
 
-                        <a href="main_controller?action=editProfileView"
+                        <a href="main_controller?action=editProfileView&account=${sessionScope.user.account}"
                            class="btn-edit">
 
                             <i class="fa-solid fa-pen"></i>

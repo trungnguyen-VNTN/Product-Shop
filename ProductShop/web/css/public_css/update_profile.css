@@ -1,0 +1,139 @@
+body{
+    margin:0;
+    background:#f5f6fa;
+    font-family:'Segoe UI',sans-serif;
+}
+
+
+/* WRAPPER */
+
+.profile-wrapper{
+    max-width:600px;
+    margin:120px auto;
+    margin-top: 150px;
+}
+
+
+/* CARD */
+
+.profile-card{
+    background:white;
+    border-radius:10px;
+    padding:35px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.08);
+}
+
+
+/* TITLE */
+
+.profile-title{
+    font-size:24px;
+    margin-bottom:25px;
+}
+
+.profile-title i{
+    color:#ff6a00;
+    margin-right:8px;
+}
+
+
+/* FORM */
+
+.profile-info{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+
+/* FIELD */
+
+.profile-row{
+    display:flex;
+    flex-direction:column;
+}
+
+
+/* LABEL */
+
+.profile-row label{
+    font-weight:600;
+    margin-bottom:6px;
+    color:#444;
+}
+
+
+/* INPUT */
+
+.profile-row input{
+    padding:9px 12px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    font-size:14px;
+}
+
+.profile-row input:focus{
+    outline:none;
+    border-color:#1976d2;
+}
+
+
+/* RADIO */
+
+.radio-group{
+    display:flex;
+    gap:20px;
+}
+
+.radio-group label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+
+/* ERROR */
+
+.error{
+    color:red;
+    font-size:13px;
+    margin-top:4px;
+}
+
+
+/* BUTTON */
+
+.profile-actions{
+    margin-top:25px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.btn-edit{
+    background:#1976d2;
+    color:white;
+    padding:10px 20px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    margin-right: 10px;
+}
+
+.btn-edit:hover{
+    background:#1259a8;
+}
+
+.btn-secondary {
+    background-color: #757575;
+    color: white;
+    text-decoration: none;
+}
+

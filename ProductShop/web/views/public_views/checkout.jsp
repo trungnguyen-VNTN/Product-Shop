@@ -93,7 +93,7 @@
                     <label>Full Name</label>
 
                     <input type="text"
-                           value="${sessionScope.user.firstName} ${sessionScope.user.lastName}"
+                           value="${sessionScope.user.lastName} ${sessionScope.user.firstName}"
                            readonly
                            class="readonly-input">
 

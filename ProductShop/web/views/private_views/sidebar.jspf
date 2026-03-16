@@ -35,16 +35,6 @@
             Products
         </a></li>
 
-        <li><a href="top-product">
-            <i class="fa fa-star"></i>
-            Top 10 Products
-        </a></li>
-
-        <li><a href="top-customer">
-            <i class="fa fa-users"></i>
-            Top 5 Customer
-        </a></li>
-
 
     </ul>
 

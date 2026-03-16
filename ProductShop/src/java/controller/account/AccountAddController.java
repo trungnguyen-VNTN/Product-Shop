@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Account;
 
 /**
@@ -68,8 +69,8 @@ public class AccountAddController extends HttpServlet {
         }
 
         // ===== VALIDATE LAST NAME =====
-        if (firstName.length() > 50) {
-            error.setFirstNameError("First name must be <= 30 characters");
+        if (lastName.length() > 50) {
+            error.setLastNameError("Last name must be <= 50 characters");
             valid = false;
         }
 
@@ -113,11 +114,14 @@ public class AccountAddController extends HttpServlet {
             Account acc = new Account(
                     account, pass, lastName, firstName,
                     birthday, gender, phone,
-                    used, roleInSystem , priceSegment
+                    used, roleInSystem, priceSegment
             );
 
-            dao.insertRec(acc);
-
+            int res = dao.insertRec(acc);
+            if (res != 0) {
+                HttpSession session = request.getSession();
+                session.setAttribute("message", "Add account successfully!");
+            }
             response.sendRedirect("main_controller?action=private_accounts");
 
         } catch (Exception e) {

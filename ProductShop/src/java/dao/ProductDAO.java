@@ -41,21 +41,22 @@ public class ProductDAO implements Accessible<Product> {
         int result = 0;
         PreparedStatement ps = null;
         try {
-            String sqlCommand = "INSERT INTO Products VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sqlCommand = "INSERT INTO Products (productId, "
+                                                + "productName, productImage, brief, typeId, "
+                                                + "account, unit, price, discount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             ps = con.prepareStatement(sqlCommand);
             ps.setString(1, obj.getProductId());
             ps.setString(2, obj.getProductName());
             ps.setString(3, obj.getProductImage());
             ps.setString(4, obj.getBrief());
-            ps.setDate(5, obj.getPostedDate());
-            ps.setInt(6, obj.getType().getTypeId());
-            ps.setString(7, obj.getAccount().getAccount());
-            ps.setString(8, obj.getUnit());
-            ps.setInt(9, obj.getPrice());
-            ps.setInt(10, obj.getDiscount());
+            ps.setInt(5, obj.getType().getTypeId());
+            ps.setString(6, obj.getAccount().getAccount());
+            ps.setString(7, obj.getUnit());
+            ps.setInt(8, obj.getPrice());
+            ps.setInt(9, obj.getDiscount());
             result = ps.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         } finally {
             try {
                 if (ps != null) {
@@ -79,7 +80,6 @@ public class ProductDAO implements Accessible<Product> {
                     + "productName = ?,"
                     + "productImage = ?,"
                     + "brief = ?,"
-                    + "postedDate = ?,"
                     + "typeId = ?,"
                     + "account = ?,"
                     + "unit = ?,"
@@ -90,13 +90,12 @@ public class ProductDAO implements Accessible<Product> {
             ps.setString(1, obj.getProductName());
             ps.setString(2, obj.getProductImage());
             ps.setString(3, obj.getBrief());
-            ps.setDate(4, obj.getPostedDate());
-            ps.setInt(5, obj.getType().getTypeId());
-            ps.setString(6, obj.getAccount().getAccount());
-            ps.setString(7, obj.getUnit());
-            ps.setInt(8, obj.getPrice());
-            ps.setInt(9, obj.getDiscount());
-            ps.setString(10, obj.getProductId());
+            ps.setInt(4, obj.getType().getTypeId());
+            ps.setString(5, obj.getAccount().getAccount());
+            ps.setString(6, obj.getUnit());
+            ps.setInt(7, obj.getPrice());
+            ps.setInt(8, obj.getDiscount());
+            ps.setString(9, obj.getProductId());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);

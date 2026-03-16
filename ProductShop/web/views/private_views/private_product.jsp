@@ -4,102 +4,110 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Product Management</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/product_list.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Product Management</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/product_list.css">
+    </head>
 
-<body>
+    <body>
 
-<%@include file="private_header.jspf" %>
-<%@ include file="sidebar.jspf" %>
+        <%@include file="private_header.jspf" %>
+        <%@ include file="sidebar.jspf" %>
 
-<div class="page-wrapper">
+        <div class="page-wrapper">
 
-    <div class="page-title">
-        <h2>Product Management</h2>
-        <p>List of products in system</p>
-    </div>
+            <div class="page-title">
+                <h2>Product Management</h2>
+                <p>List of products in system</p>
+            </div>
 
-    <div class="card">
+            <div class="card">
+                
+                <c:if test="${not empty sessionScope.message}">
+                    <div class="success-message">
+                        ${sessionScope.message}
+                    </div>
 
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Posted Date</th>
-                    <th>Unit</th>
-                    <th>Price</th>
-                    <th>Discount</th>
-                    <th class="action-col">Action</th>
-                </tr>
-            </thead>
+                    <c:remove var="message" scope="session"/>
+                </c:if>
+                
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Posted Date</th>
+                            <th>Unit</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th class="action-col">Action</th>
+                        </tr>
+                    </thead>
 
-            <tbody>
-                <c:forEach var="pro" items="${product_list}">
-                    <tr>
+                    <tbody>
+                        <c:forEach var="pro" items="${product_list}">
+                            <tr>
 
-                        <td>${pro.productId}</td>
+                                <td>${pro.productId}</td>
 
-                        <!-- Image -->
-                        <td>
-                            <img src="${pageContext.request.contextPath}/${pro.productImage}" 
-                                 width="60" height="60"
-                                 style="object-fit: cover; border-radius: 6px;">
-                        </td>
+                                <!-- Image -->
+                                <td>
+                                    <img src="${pageContext.request.contextPath}/${pro.productImage}" 
+                                         width="60" height="60"
+                                         style="object-fit: cover; border-radius: 6px;">
+                                </td>
 
-                        <td>${pro.productName}</td>
+                                <td>${pro.productName}</td>
 
-                        <!-- Category -->
-                        <td>${pro.type.categoryName}</td>
+                                <!-- Category -->
+                                <td>${pro.type.categoryName}</td>
 
-                        <!-- Posted Date -->
-                        <td>
-                            <fmt:formatDate value="${pro.postedDate}" pattern="dd/MM/yyyy"/>
-                        </td>
+                                <!-- Posted Date -->
+                                <td>
+                                    <fmt:formatDate value="${pro.postedDate}" pattern="dd/MM/yyyy"/>
+                                </td>
 
-                        <td>${pro.unit}</td>
+                                <td>${pro.unit}</td>
 
-                        <td>
-                            <fmt:formatNumber value="${pro.price}" type="number"/> VND
-                        </td>
+                                <td>
+                                    <fmt:formatNumber value="${pro.price}" type="number"/> VND
+                                </td>
 
-                        <td>${pro.discount}%</td>
+                                <td>${pro.discount}%</td>
 
-                        <td class="actions">
+                                <td class="actions">
 
-                            <!-- Update -->
-                            <a href="main_controller?action=private_updateProductView&productId=${pro.productId}" 
-                               class="btn btn-primary">Update</a>
+                                    <!-- Update -->
+                                    <a href="main_controller?action=private_updateProductView&productId=${pro.productId}" 
+                                       class="btn btn-primary">Update</a>
 
-                            <!-- Delete -->
-                            <a href="main_controller?action=private_deleteProduct&productId=${pro.productId}" 
-                               class="btn btn-danger"
-                               onclick="return confirm('Are you sure to delete this product?')">
-                                Delete
-                            </a>
+                                    <!-- Delete -->
+                                    <a href="main_controller?action=private_deleteProduct&productId=${pro.productId}" 
+                                       class="btn btn-danger"
+                                       onclick="return confirm('Are you sure to delete this product?')">
+                                        Delete
+                                    </a>
 
-                        </td>
+                                </td>
 
-                    </tr>
-                </c:forEach>
-            </tbody>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
 
-        </table>
+                </table>
 
-    </div>
+            </div>
 
-    <div class="card-footer">
-        <a href="main_controller?action=private_addProductView" class="btn btn-add">
-            + Add New Product
-        </a>
-    </div>
+            <div class="card-footer">
+                <a href="main_controller?action=private_addProductView" class="btn btn-add">
+                    + Add New Product
+                </a>
+            </div>
 
-</div>
+        </div>
 
-</body>
+    </body>
 </html>

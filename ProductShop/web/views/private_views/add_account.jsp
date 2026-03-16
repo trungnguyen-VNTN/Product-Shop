@@ -31,7 +31,7 @@
                         <label>Account</label>
                         <input type="text" name="account"
                                value="${param.account}"
-                               placeholder="Enter account">
+                               placeholder="Enter account" required>
                         <span class="error">${account_error.accountError}</span>
                     </div>
 
@@ -39,7 +39,7 @@
                     <div class="form-group">
                         <label>Password</label>
                         <input type="password" name="pass"
-                               placeholder="Enter password">
+                               placeholder="Enter password" required>
                         <span class="error">${account_error.passError}</span>
                     </div>
 
@@ -48,7 +48,7 @@
                         <label>Last Name</label>
                         <input type="text" name="lastName"
                                value="${param.lastName}"
-                               placeholder="Enter last name">
+                               placeholder="Enter last name" required>
                         <span class="error">${account_error.lastNameError}</span>
                     </div>
 
@@ -57,7 +57,7 @@
                         <label>First Name</label>
                         <input type="text" name="firstName"
                                value="${param.firstName}"
-                               placeholder="Enter first name">
+                               placeholder="Enter first name" required>
                         <span class="error">${account_error.firstNameError}</span>
                     </div>
 
@@ -66,7 +66,7 @@
                         <label>Phone Number</label>
                         <input type="text" name="phone"
                                value="${param.phone}"
-                               placeholder="Enter phone number">
+                               placeholder="Enter phone number" required>
                         <span class="error">${account_error.phoneError}</span>
                     </div>
 
@@ -74,7 +74,7 @@
                     <div class="form-group">
                         <label>Birth Day</label>
                         <input type="date" name="birthday"
-                               value="${param.birthday}">
+                               value="${param.birthday}" required>
                         <span class="error">${account_error.birthdayError}</span>
                     </div>
 
@@ -119,7 +119,7 @@
                             </select>
 
                         </div>
-                                    
+
                         <!-- PriceSegment -->
                         <div class="form-group">
                             <label>Price Segment</label>

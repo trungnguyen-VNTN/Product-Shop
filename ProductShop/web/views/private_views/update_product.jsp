@@ -58,12 +58,6 @@
                         <textarea class="brief-box" name="brief">${param.brief != null ? param.brief : product.brief.replaceAll("\\s+", " ").trim()}</textarea>
                     </div>
 
-                    <!-- Posted Date -->
-                    <div class="form-group">
-                        <label>Posted Date</label>
-                        <input type="date" name="postedDate"
-                               value="${param.postedDate != null ? param.postedDate : product.postedDate}">
-                    </div>
 
                     <!-- Category -->
                     <div class="form-group">

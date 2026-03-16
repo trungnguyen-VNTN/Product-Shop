@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.account;
+package controller.home;
 
 import dao.AccountDAO;
 import error.AccountError;
@@ -12,17 +12,18 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.Account;
 
 /**
  *
  * @author PC
  */
-public class AccountUpdateController extends HttpServlet {
+@WebServlet(name = "RegisterAddController", urlPatterns = {"/register_add"})
+public class RegisterAddController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,11 +45,14 @@ public class AccountUpdateController extends HttpServlet {
         String birthdayStr = request.getParameter("birthday");
         String genderStr = request.getParameter("gender");
         String phone = request.getParameter("phone");
-        boolean used = Boolean.parseBoolean(request.getParameter("used"));
-        int roleInSystem = Integer.parseInt(request.getParameter("roleInSystem"));
-        int priceSegment = Integer.parseInt(request.getParameter("priceSegment"));
         AccountError error = new AccountError();
         boolean valid = true;
+
+        // ===== VALIDATE ACCOUNT =====
+        if (account.length() > 20) {
+            error.setAccountError("Account must be <= 20 characters");
+            valid = false;
+        }
 
         // ===== VALIDATE PASSWORD =====
         if (pass.length() > 20) {
@@ -80,10 +84,16 @@ public class AccountUpdateController extends HttpServlet {
             birthday = java.sql.Date.valueOf(birthdayStr);
         }
 
+        AccountDAO dao = new AccountDAO(getServletContext());
+        if (dao.getObjectById(account) != null) {
+            error.setAccountError("Account already exists");
+            valid = false;
+        }
+
         // ===== IF VALIDATION FAIL =====
         if (!valid) {
             request.setAttribute("account_error", error);
-            request.getRequestDispatcher("/views/private_views/update_account.jsp")
+            request.getRequestDispatcher("/views/public_views/register.jsp")
                     .forward(request, response);
             return;
         }
@@ -102,17 +112,12 @@ public class AccountUpdateController extends HttpServlet {
             Account acc = new Account(
                     account, pass, lastName, firstName,
                     birthday, gender, phone,
-                    used, roleInSystem, priceSegment
+                    true, 0, 0
             );
 
-            AccountDAO dao = new AccountDAO(getServletContext());
-            int res = dao.updateRec(acc);
-            if (res != 0) {
-                HttpSession session = request.getSession();
-                session.setAttribute("message", "Update account successfully!");
-            }
+            dao.insertRec(acc);
 
-            response.sendRedirect("main_controller?action=private_accounts");
+            response.sendRedirect("main_controller?action=login");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,9 +139,9 @@ public class AccountUpdateController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccountUpdateController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisterAddController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(AccountUpdateController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisterAddController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -154,9 +159,9 @@ public class AccountUpdateController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccountUpdateController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisterAddController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(AccountUpdateController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisterAddController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

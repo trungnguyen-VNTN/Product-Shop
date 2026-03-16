@@ -79,3 +79,19 @@ html, body {
     text-align: center;
     font-size: 14px;
 }
+
+.register-link{
+    margin-top:15px;
+    text-align:center;
+    font-size:14px;
+}
+
+.register-link a{
+    color:#ff3b2f;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.register-link a:hover{
+    text-decoration:underline;
+}

@@ -154,3 +154,12 @@ body {
 .btn-add:hover {
     background-color: #00695c;
 }
+
+.success-message{
+    text-align: center;
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}

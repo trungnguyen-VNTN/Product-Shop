@@ -3,6 +3,7 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/order_success.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+<title>Order Success</title>
 
 <c:choose>
     <c:when test="${sessionScope.user == null || sessionScope.user.roleInSystem == 0}">

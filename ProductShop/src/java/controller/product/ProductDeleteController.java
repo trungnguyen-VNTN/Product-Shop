@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Product;
 
 /**
@@ -53,7 +54,11 @@ public class ProductDeleteController extends HttpServlet {
             if (file.exists()) {
                 file.delete();
             }
-            dao.deleteRec(dao.getObjectById(productId));
+            int res = dao.deleteRec(dao.getObjectById(productId));
+            if (res != 0) {
+                HttpSession session = request.getSession();
+                session.setAttribute("message", "Delete product successfully!");
+            }
         }
 
         response.sendRedirect("main_controller?action=private_products");

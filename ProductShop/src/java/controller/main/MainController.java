@@ -81,6 +81,26 @@ public class MainController extends HttpServlet {
                         .forward(request, response);
                 break;
 
+            case "register":
+                request.getRequestDispatcher("views/public_views/register.jsp")
+                        .forward(request, response);
+                break;
+
+            case "registerAdd":
+                request.getRequestDispatcher("/register_add")
+                        .forward(request, response);
+                break;
+
+            case "editProfileView":
+                request.getRequestDispatcher("/profile_update_view")
+                        .forward(request, response);
+                break;
+
+            case "updateProfile":
+                request.getRequestDispatcher("/profile_update")
+                        .forward(request, response);
+                break;
+
             case "productFilter":
                 request.getRequestDispatcher("/product_filter")
                         .forward(request, response);

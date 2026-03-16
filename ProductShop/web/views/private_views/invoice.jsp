@@ -4,131 +4,139 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Order Management</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Invoice</title>
 
-<link rel="stylesheet"
-href="${pageContext.request.contextPath}/css/private_css/invoice.css">
+        <link rel="stylesheet"
+              href="${pageContext.request.contextPath}/css/private_css/invoice.css">
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-<%@include file="private_header.jspf" %>
-<%@include file="sidebar.jspf" %>
+        <%@include file="private_header.jspf" %>
+        <%@include file="sidebar.jspf" %>
 
-<div class="page-wrapper">
+        <div class="page-wrapper">
 
-    <div class="page-title">
-        <h2>Order Management</h2>
-        <p>List of orders in system</p>
-    </div>
-
-
-    <div class="card">
-
-        <table class="styled-table">
-
-            <thead>
-
-                <tr>
-
-                    <th>ID</th>
-                    <th>Account</th>
-                    <th>Order Date</th>
-                    <th>Shipping Address</th>
-                    <th>Phone</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                    <th class="action-col">Action</th>
-
-                </tr>
-
-            </thead>
+            <div class="page-title">
+                <h2>Order Management</h2>
+                <p>List of orders in system</p>
+            </div>
 
 
-            <tbody>
+            <div class="card">
 
-                <c:forEach var="o" items="${orderList}">
+                <c:if test="${not empty sessionScope.message}">
+                    <div class="success-message">
+                        ${sessionScope.message}
+                    </div>
 
-                    <tr>
+                    <c:remove var="message" scope="session"/>
+                </c:if>
 
-                        <td>${o.orderId}</td>
+                <table class="styled-table">
 
-                        <td>${o.account.getAccount()}</td>
+                    <thead>
 
-                        <td>
-                            <fmt:formatDate value="${o.orderDate}" pattern="dd/MM/yyyy"/>
-                        </td>
+                        <tr>
 
-                        <td>${o.shippingAddress}</td>
+                            <th>ID</th>
+                            <th>Account</th>
+                            <th>Order Date</th>
+                            <th>Shipping Address</th>
+                            <th>Phone</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th class="action-col">Action</th>
 
-                        <td>${o.phone}</td>
+                        </tr>
 
-                        <td class="price">
-                            <fmt:formatNumber value="${o.totalAmount}" type="number"/> VND
-                        </td>
-
-
-                        <!-- STATUS UPDATE -->
-
-                        <td>
-
-                            <form action="main_controller" method="post">
-
-                                <input type="hidden" name="action" value="private_updateOrderStatus">
-                                <input type="hidden" name="orderId" value="${o.orderId}">
-
-                                <select name="status"
-                                        onchange="this.form.submit()"
-                                        style="padding:5px;border-radius:4px">
-
-                                    <option value="0" ${o.status==0?'selected':''}>
-                                        Pending
-                                    </option>
-
-                                    <option value="1" ${o.status==1?'selected':''}>
-                                        Processing
-                                    </option>
-
-                                    <option value="2" ${o.status==2?'selected':''}>
-                                        Shipping
-                                    </option>
-
-                                    <option value="3" ${o.status==3?'selected':''}>
-                                        Completed
-                                    </option>
-
-                                </select>
-
-                            </form>
-
-                        </td>
+                    </thead>
 
 
-                        <!-- ACTION -->
+                    <tbody>
 
-                        <td class="actions">
+                        <c:forEach var="o" items="${orderList}">
 
-                            <a href="main_controller?action=private_viewOrderDetail&id=${o.orderId}"
-                               class="btn btn-primary">
-                                View
-                            </a>
+                            <tr>
 
-                        </td>
+                                <td>${o.orderId}</td>
 
-                    </tr>
+                                <td>${o.account.getAccount()}</td>
 
-                </c:forEach>
+                                <td>
+                                    <fmt:formatDate value="${o.orderDate}" pattern="dd/MM/yyyy"/>
+                                </td>
 
-            </tbody>
+                                <td>${o.shippingAddress}</td>
 
-        </table>
+                                <td>${o.phone}</td>
 
-    </div>
+                                <td class="price">
+                                    <fmt:formatNumber value="${o.totalAmount}" type="number"/> VND
+                                </td>
 
-</div>
 
-</body>
+                                <!-- STATUS UPDATE -->
+
+                                <td>
+
+                                    <form action="main_controller" method="post">
+
+                                        <input type="hidden" name="action" value="private_updateOrderStatus">
+                                        <input type="hidden" name="orderId" value="${o.orderId}">
+
+                                        <select name="status"
+                                                onchange="this.form.submit()"
+                                                style="padding:5px;border-radius:4px">
+
+                                            <option value="0" ${o.status==0?'selected':''}>
+                                                Pending
+                                            </option>
+
+                                            <option value="1" ${o.status==1?'selected':''}>
+                                                Processing
+                                            </option>
+
+                                            <option value="2" ${o.status==2?'selected':''}>
+                                                Shipping
+                                            </option>
+
+                                            <option value="3" ${o.status==3?'selected':''}>
+                                                Completed
+                                            </option>
+
+                                        </select>
+
+                                    </form>
+
+                                </td>
+
+
+                                <!-- ACTION -->
+
+                                <td class="actions">
+
+                                    <a href="main_controller?action=private_viewOrderDetail&id=${o.orderId}"
+                                       class="btn btn-primary">
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        </c:forEach>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </body>
 </html>

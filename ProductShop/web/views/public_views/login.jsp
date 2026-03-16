@@ -27,6 +27,11 @@
                     <input type="hidden" name="action" value="login">
                     <button type="submit">LOGIN</button>
                 </form>
+
+                <div class="register-link">
+                    Don't have an account?
+                    <a href="main_controller?action=register">Register</a>
+                </div>
             </div>
 
         </div>

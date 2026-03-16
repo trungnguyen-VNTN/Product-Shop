@@ -10,7 +10,6 @@ import dao.ProductDAO;
 import error.ProductError;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +18,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import model.Account;
 import model.Category;
@@ -45,12 +45,10 @@ public class ProductAddController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
-
 // ===== GET PARAM =====
         String productId = request.getParameter("productId");
         String productName = request.getParameter("productName");
         String brief = request.getParameter("brief");
-        String postedDateStr = request.getParameter("postedDate");
         String typeId = request.getParameter("typeId");
         String account = request.getParameter("account");
         String unit = request.getParameter("unit");
@@ -105,12 +103,6 @@ public class ProductAddController extends HttpServlet {
             valid = false;
         }
 
-// DATE
-        Date postedDate = null;
-        if (postedDateStr != null && !postedDateStr.isEmpty()) {
-            postedDate = java.sql.Date.valueOf(postedDateStr);
-        }
-
 // CHECK DUPLICATE
         ProductDAO dao = new ProductDAO(getServletContext());
         if (dao.getObjectById(productId) != null) {
@@ -137,7 +129,7 @@ public class ProductAddController extends HttpServlet {
 
             // ===== HANDLE IMAGE UPLOAD =====
             // ===== HANDLE IMAGE UPLOAD =====
-            String dbImagePath = "";   
+            String dbImagePath = "";
 
             if (filePart != null && filePart.getSize() > 0) {
 
@@ -167,14 +159,18 @@ public class ProductAddController extends HttpServlet {
                     productName,
                     dbImagePath,
                     brief,
-                    postedDate,
+                    null,
                     category,
                     acc,
                     unit,
                     price,
                     discount
             );
-            dao.insertRec(product);
+            int res = dao.insertRec(product);
+            if (res != 0) {
+                HttpSession session = request.getSession();
+                session.setAttribute("message", "Add product successfully!");
+            }
 
             response.sendRedirect("main_controller?action=private_products");
 

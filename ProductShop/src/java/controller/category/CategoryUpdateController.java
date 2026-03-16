@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Category;
 
 /**
@@ -52,7 +53,6 @@ public class CategoryUpdateController extends HttpServlet {
             valid = false;
         }
 
-
         if (!valid) {
             request.setAttribute("category_error", error);
             request.getRequestDispatcher("/views/private_views/update_category.jsp")
@@ -69,7 +69,11 @@ public class CategoryUpdateController extends HttpServlet {
             Category cate = new Category(typeId, categoryName, memo);
 
             CategoryDAO dao = new CategoryDAO(getServletContext());
-            dao.updateRec(cate);
+            int res = dao.updateRec(cate);
+            if (res != 0) {
+                HttpSession session = request.getSession();
+                session.setAttribute("message", "Update category successfully!");
+            }
 
             response.sendRedirect("main_controller?action=private_categories");
 

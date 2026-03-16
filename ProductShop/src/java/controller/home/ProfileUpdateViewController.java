@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.account;
+package controller.home;
 
 import dao.AccountDAO;
 import java.io.IOException;
@@ -10,16 +10,18 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
  * @author PC
  */
-public class AccountDeleteController extends HttpServlet {
+@WebServlet(name = "ProfileUpdateViewController", urlPatterns = {"/profile_update_view"})
+public class ProfileUpdateViewController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,18 +35,13 @@ public class AccountDeleteController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException {
         request.setCharacterEncoding("UTF-8");
-
         response.setContentType("text/html;charset=UTF-8");
-        String account = request.getParameter("account");
+        String accountId = request.getParameter("account");
         AccountDAO dao = new AccountDAO(getServletContext());
-        if (account != null) {
-            int res = dao.deleteRec(dao.getObjectById(account));
-            if (res != 0) {
-                HttpSession session = request.getSession();
-                session.setAttribute("message", "Delete account successfully!");
-            }
-        }
-        request.getRequestDispatcher("main_controller?action=private_accounts").forward(request, response);
+        Account acc = dao.getObjectById(accountId);
+        request.setAttribute("acc", acc);
+        request.getRequestDispatcher("/views/public_views/update_profile.jsp")
+                .forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,9 +59,9 @@ public class AccountDeleteController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccountDeleteController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProfileUpdateViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(AccountDeleteController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProfileUpdateViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -82,9 +79,9 @@ public class AccountDeleteController extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccountDeleteController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProfileUpdateViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(AccountDeleteController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProfileUpdateViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

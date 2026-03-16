@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,7 +37,11 @@ public class CategoryDeleteController extends HttpServlet {
         String category = request.getParameter("typeId");
         CategoryDAO dao = new CategoryDAO(getServletContext());
         if (category != null) {
-            dao.deleteRec(dao.getObjectById(category));
+            int res = dao.deleteRec(dao.getObjectById(category));
+            if (res != 0) {
+                HttpSession session = request.getSession();
+                session.setAttribute("message", "Delete category successfully!");
+            }
         }
         request.getRequestDispatcher("main_controller?action=private_categories").forward(request, response);
     }

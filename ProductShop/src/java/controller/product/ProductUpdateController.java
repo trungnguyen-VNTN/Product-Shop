@@ -10,7 +10,6 @@ import dao.ProductDAO;
 import error.ProductError;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +18,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import model.Account;
 import model.Category;
@@ -49,7 +49,6 @@ public class ProductUpdateController extends HttpServlet {
         String productId = request.getParameter("productId");
         String productName = request.getParameter("productName");
         String brief = request.getParameter("brief");
-        String postedDateStr = request.getParameter("postedDate");
         String typeId = request.getParameter("typeId");
         String account = request.getParameter("account");
         String unit = request.getParameter("unit");
@@ -105,12 +104,6 @@ public class ProductUpdateController extends HttpServlet {
             valid = false;
         }
 
-// DATE
-        Date postedDate = null;
-        if (postedDateStr != null && !postedDateStr.isEmpty()) {
-            postedDate = java.sql.Date.valueOf(postedDateStr);
-        }
-
         ProductDAO dao = new ProductDAO(getServletContext());
 
 // ===== IF ERROR =====
@@ -131,7 +124,7 @@ public class ProductUpdateController extends HttpServlet {
         try {
 
             // ===== HANDLE IMAGE UPLOAD =====
-            String dbImagePath = "";   
+            String dbImagePath = "";
 
             if (filePart != null && filePart.getSize() > 0) {
 
@@ -163,14 +156,18 @@ public class ProductUpdateController extends HttpServlet {
                     productName,
                     dbImagePath,
                     brief,
-                    postedDate,
+                    null,
                     category,
                     acc,
                     unit,
                     price,
                     discount
             );
-            dao.updateRec(product);
+            int res = dao.updateRec(product);
+            if (res != 0) {
+                HttpSession session = request.getSession();
+                session.setAttribute("message", "Update product successfully!");
+            }
             response.sendRedirect("main_controller?action=private_products");
 
         } catch (Exception e) {

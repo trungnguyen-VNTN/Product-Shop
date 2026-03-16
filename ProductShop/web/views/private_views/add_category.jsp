@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Category</title>
+        <title>Add Category</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/private_css/add_category.css">
     </head>
 
@@ -30,7 +30,7 @@
                         <label>Category Name</label>
                         <input type="text" name="categoryName"
                                value="${param.categoryName}"
-                               placeholder="Enter category name">
+                               placeholder="Enter category name" required>
                         <span class="error">${category_error.categoryNameError}</span>
                     </div>
 
@@ -38,7 +38,7 @@
                         <label>Memo</label>
                         <input type="text" name="memo"
                                value="${param.memo}"
-                               placeholder="Enter memo">
+                               placeholder="Enter memo" required>
                         <span class="error">${category_error.memoError}</span>
                     </div>
 

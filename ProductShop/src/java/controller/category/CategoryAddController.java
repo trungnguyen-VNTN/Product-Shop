@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Category;
 
 /**
@@ -31,7 +32,7 @@ public class CategoryAddController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-          request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
         String categoryName = request.getParameter("categoryName");
@@ -49,7 +50,6 @@ public class CategoryAddController extends HttpServlet {
             valid = false;
         }
 
-
         if (!valid) {
             request.setAttribute("category_error", error);
             request.getRequestDispatcher("/views/private_views/add_category.jsp")
@@ -66,7 +66,11 @@ public class CategoryAddController extends HttpServlet {
             Category cate = new Category(0, categoryName, memo);
 
             CategoryDAO dao = new CategoryDAO(getServletContext());
-            dao.insertRec(cate);
+            int res = dao.insertRec(cate);
+            if (res != 0) {
+                HttpSession session = request.getSession();
+                session.setAttribute("message", "Add category successfully!");
+            }
 
             response.sendRedirect("main_controller?action=private_categories");
 

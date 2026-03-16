@@ -33,7 +33,7 @@
                         <label>Product ID</label>
                         <input type="text" name="productId"
                                value="${param.productId}"
-                               placeholder="Enter product ID">
+                               placeholder="Enter product ID" required>
                         <span class="error">${product_error.productIdError}</span>
                     </div>
 
@@ -42,30 +42,22 @@
                         <label>Product Name</label>
                         <input type="text" name="productName"
                                value="${param.productName}"
-                               placeholder="Enter product name">
+                               placeholder="Enter product name" required>
                         <span class="error">${product_error.productNameError}</span>
                     </div>
 
                     <!-- Select Image File -->
                     <div class="form-group">
                         <label>Select Image</label>
-                        <input type="file" name="fileImage" accept="image/*">
+                        <input type="file" name="fileImage" accept="image/*" required>
                         <span class="error">${product_error.productImageError}</span>
                     </div>
 
                     <!-- Brief -->
                     <div class="form-group">
                         <label>Brief</label>
-                        <textarea name="brief" class="brief-box" placeholder="Short description">${param.brief}</textarea>
+                        <textarea name="brief" class="brief-box" placeholder="Short description" required>${param.brief}</textarea>
                         <span class="error">${product_error.briefError}</span>
-                    </div>
-
-                    <!-- Posted Date -->
-                    <div class="form-group">
-                        <label>Posted Date</label>
-                        <input type="date" name="postedDate"
-                               value="${param.postedDate}">
-                        <span class="error">${product_error.postedDateError}</span>
                     </div>
 
                     <!-- Category -->
@@ -99,7 +91,7 @@
                         <label>Unit</label>
                         <input type="text" name="unit"
                                value="${param.unit}"
-                               placeholder="pcs, box, kg...">
+                               placeholder="pcs, box, kg..." required>
                         <span class="error">${product_error.unitError}</span>
                     </div>
 
@@ -108,7 +100,7 @@
                         <label>Price</label>
                         <input type="number" name="price"
                                value="${param.price}"
-                               placeholder="Enter price">
+                               placeholder="Enter price" required>
                         <span class="error">${product_error.priceError}</span>
                     </div>
 
@@ -117,7 +109,7 @@
                         <label>Discount (%)</label>
                         <input type="number" name="discount"
                                value="${param.discount}"
-                               placeholder="0 - 100">
+                               placeholder="0 - 100" required>
                         <span class="error">${product_error.discountError}</span>
                     </div>
 

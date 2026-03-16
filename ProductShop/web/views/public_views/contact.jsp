@@ -73,7 +73,7 @@
                         Tell us about your thinking
                     </h3>
                     
-                    <form action="main_controller" method="post">
+                    <form action="main_controller?action=home" method="post">
 
                         <input type="hidden" name="action" value="sendContact">
 

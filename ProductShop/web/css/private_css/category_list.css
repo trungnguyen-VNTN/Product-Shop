@@ -129,8 +129,17 @@ body {
     background-color: #00695c;
 }
 
-/* Căn giữa cột Memo */
+
 .styled-table th:nth-child(2),
 .styled-table td:nth-child(2) {
     text-align: center;
+}
+
+.success-message{
+    text-align: center;
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
 }

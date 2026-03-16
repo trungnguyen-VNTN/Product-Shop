@@ -2,27 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.account;
+package controller.home;
 
 import dao.AccountDAO;
 import error.AccountError;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.Account;
 
 /**
  *
  * @author PC
  */
-public class AccountUpdateController extends HttpServlet {
+@WebServlet(name = "ProfileUpdateController", urlPatterns = {"/profile_update"})
+public class ProfileUpdateController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +32,7 @@ public class AccountUpdateController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
+            throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         String account = request.getParameter("account");
@@ -44,9 +42,6 @@ public class AccountUpdateController extends HttpServlet {
         String birthdayStr = request.getParameter("birthday");
         String genderStr = request.getParameter("gender");
         String phone = request.getParameter("phone");
-        boolean used = Boolean.parseBoolean(request.getParameter("used"));
-        int roleInSystem = Integer.parseInt(request.getParameter("roleInSystem"));
-        int priceSegment = Integer.parseInt(request.getParameter("priceSegment"));
         AccountError error = new AccountError();
         boolean valid = true;
 
@@ -83,7 +78,7 @@ public class AccountUpdateController extends HttpServlet {
         // ===== IF VALIDATION FAIL =====
         if (!valid) {
             request.setAttribute("account_error", error);
-            request.getRequestDispatcher("/views/private_views/update_account.jsp")
+            request.getRequestDispatcher("/views/public_views/update_profile.jsp")
                     .forward(request, response);
             return;
         }
@@ -98,6 +93,11 @@ public class AccountUpdateController extends HttpServlet {
             } else {
                 gender = false;
             }
+            AccountDAO dao = new AccountDAO(getServletContext());
+            Account tmp = (Account) dao.getObjectById(account);
+            boolean used = tmp.isUsed();
+            int roleInSystem = tmp.getRoleInSystem();
+            int priceSegment = tmp.getPriceSegment();
 
             Account acc = new Account(
                     account, pass, lastName, firstName,
@@ -105,14 +105,10 @@ public class AccountUpdateController extends HttpServlet {
                     used, roleInSystem, priceSegment
             );
 
-            AccountDAO dao = new AccountDAO(getServletContext());
-            int res = dao.updateRec(acc);
-            if (res != 0) {
-                HttpSession session = request.getSession();
-                session.setAttribute("message", "Update account successfully!");
-            }
+            dao.updateRec(acc);
+            request.getSession().setAttribute("user", acc);
 
-            response.sendRedirect("main_controller?action=private_accounts");
+            response.sendRedirect("main_controller?action=profile");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,13 +127,7 @@ public class AccountUpdateController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccountUpdateController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountUpdateController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -151,13 +141,7 @@ public class AccountUpdateController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AccountUpdateController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountUpdateController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

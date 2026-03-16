@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/public_css/cart.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
-
+<title>Cart</title>
 <c:choose>
     <c:when test="${sessionScope.user == null || sessionScope.user.roleInSystem == 0}">
         <%@ include file="header.jspf" %>
